@@ -12,6 +12,7 @@ import "@fontsource-variable/newsreader/opsz.css";
 import "@fontsource-variable/newsreader/opsz-italic.css";
 import "~/styles/tokens.css";
 import "~/styles/base.css";
+import "~/styles/site.css";
 
 import { themeBootScript } from "~/lib/theme";
 

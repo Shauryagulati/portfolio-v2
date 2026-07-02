@@ -14,20 +14,69 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/projects": {
+    params: {};
+  };
+  "/projects/:slug": {
+    params: {
+      "slug": string;
+    };
+  };
+  "/about": {
+    params: {};
+  };
+  "/resume": {
+    params: {};
+  };
+  "/*": {
+    params: {
+      "*": string;
+    };
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/";
+    page: "/" | "/projects" | "/projects/:slug" | "/about" | "/resume" | "/*";
+  };
+  "routes/layout.tsx": {
+    id: "routes/layout";
+    page: "/" | "/projects" | "/projects/:slug" | "/about" | "/resume" | "/*";
   };
   "routes/home.tsx": {
     id: "routes/home";
     page: "/";
   };
+  "routes/projects.tsx": {
+    id: "routes/projects";
+    page: "/projects";
+  };
+  "routes/project.tsx": {
+    id: "routes/project";
+    page: "/projects/:slug";
+  };
+  "routes/about.tsx": {
+    id: "routes/about";
+    page: "/about";
+  };
+  "routes/resume.tsx": {
+    id: "routes/resume";
+    page: "/resume";
+  };
+  "routes/not-found.tsx": {
+    id: "routes/not-found";
+    page: "/*";
+  };
 };
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
+  "routes/layout": typeof import("./app/routes/layout.tsx");
   "routes/home": typeof import("./app/routes/home.tsx");
+  "routes/projects": typeof import("./app/routes/projects.tsx");
+  "routes/project": typeof import("./app/routes/project.tsx");
+  "routes/about": typeof import("./app/routes/about.tsx");
+  "routes/resume": typeof import("./app/routes/resume.tsx");
+  "routes/not-found": typeof import("./app/routes/not-found.tsx");
 };
