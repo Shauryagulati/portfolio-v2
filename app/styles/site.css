@@ -550,6 +550,73 @@ li:last-child .work-row {
   cursor: default;
 }
 
+/* ————— page view transitions ————— */
+
+@media not (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root) {
+    animation: 110ms var(--ease-out) both vt-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 260ms var(--ease-out) 60ms both vt-in;
+  }
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* ————— graphite & phosphor: the night texture ————— */
+/* dark mode earns its cyberpunk with CRT physics, not neon:
+   faint scanlines over anything terminal, a whisper of phosphor
+   bleed on live green text. */
+
+[data-theme="dark"] .term-artifact::after,
+[data-theme="dark"] .term-window::after,
+[data-theme="dark"] .ascii-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 2px,
+    rgb(0 0 0 / 0.14) 2px 3px
+  );
+}
+
+[data-theme="dark"] .term-artifact,
+[data-theme="dark"] .term-window {
+  position: relative;
+}
+
+[data-theme="dark"] .term-window::after {
+  border-radius: 12px;
+}
+
+[data-theme="dark"] .term-artifact::after {
+  border-radius: 10px;
+}
+
+[data-theme="dark"] .term-green,
+[data-theme="dark"] .term-ok {
+  text-shadow: 0 0 9px rgb(52 215 111 / 0.4);
+}
+
+[data-theme="dark"] .term-cursor {
+  box-shadow: 0 0 8px rgb(232 230 225 / 0.5);
+}
+
 /* ————— responsive ————— */
 
 @media (max-width: 860px) {

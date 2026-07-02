@@ -62,7 +62,7 @@ export default function Home() {
         <ol className="work-list">
           {featured.map((p, i) => (
             <Reveal key={p.slug} order={i + 1} as="li">
-              <Link to={`/projects/${p.slug}`} className="work-row">
+              <Link to={`/projects/${p.slug}`} className="work-row" viewTransition>
                 <span className="mono work-index">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -78,7 +78,7 @@ export default function Home() {
           ))}
         </ol>
         <Reveal order={featured.length + 1}>
-          <Link to="/projects" className="mono work-all">
+          <Link to="/projects" className="mono work-all" viewTransition>
             All projects →
           </Link>
         </Reveal>

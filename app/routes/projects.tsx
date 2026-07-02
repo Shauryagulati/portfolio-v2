@@ -23,7 +23,7 @@ export default function Projects() {
       <ol className="work-list">
         {projects.map((p, i) => (
           <Reveal key={p.slug} order={i + 1} as="li">
-            <Link to={`/projects/${p.slug}`} className="work-row">
+            <Link to={`/projects/${p.slug}`} className="work-row" viewTransition>
               <span className="mono work-index">
                 {String(i + 1).padStart(2, "0")}
               </span>

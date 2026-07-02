@@ -68,7 +68,7 @@ export default function Project() {
               Source available on request.
             </span>
           )}
-          <Link className="mono" to={`/projects/${next.slug}`}>
+          <Link className="mono" to={`/projects/${next.slug}`} viewTransition>
             Next: {next.title} →
           </Link>
         </div>

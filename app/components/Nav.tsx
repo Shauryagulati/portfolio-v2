@@ -9,12 +9,17 @@ export function openTerminal() {
 export function Nav() {
   return (
     <header className="nav page">
-      <Link to="/" className="nav-name mono">
+      <Link to="/" className="nav-name mono" viewTransition>
         {site.name.toLowerCase()}
       </Link>
       <nav className="nav-links" aria-label="Primary">
         {site.nav.map((item) => (
-          <NavLink key={item.to} to={item.to} className="mono nav-link">
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className="mono nav-link"
+            viewTransition
+          >
             {item.label}
           </NavLink>
         ))}
