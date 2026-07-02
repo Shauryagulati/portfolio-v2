@@ -1,34 +1,95 @@
 # Shaurya Gulati
 
-> AI product builder and data scientist, currently pursuing a Master's at Carnegie Mellon. I design and ship intelligent systems: RAG pipelines, multi-agent applications, and the generative-AI products that put them in people's hands.
+> AI engineer working on agents, retrieval, and evaluation. Carnegie Mellon MISM-BIDA graduate ('25), most recently Founding AI Engineer at Lunon, where I built the multi-agent pipeline and analyst copilot behind automated commercial due diligence. I care about systems that cite their sources, tests that catch agents misbehaving, and products that earn their place in a workflow.
 
-Canonical site: https://shauryagulati.dev
+Canonical site: https://shauryagulati.me
 Contact: i.shauryagulati@gmail.com · GitHub: https://github.com/Shauryagulati · LinkedIn: https://www.linkedin.com/in/shauryagulati/
 
 ---
 
 # About Shaurya Gulati
 
-I'm Shaurya — an AI product builder and data scientist, currently pursuing a Master's at Carnegie Mellon University.
-My work sits where machine learning meets product: RAG pipelines that cite their sources, multi-agent systems that check their own output, generative tools that people actually use. I care as much about how a system behaves in someone's hands as I do about how it scores on a benchmark.
-Outside the code, I'm drawn to human behavior, storytelling, and systems thinking — the disciplines that explain why some tools feel inevitable and others feel like homework. That lens shapes what I build: products should not just work; they should think, adapt, and earn their place in the workflow.
-This site is a working example. The terminal in the corner is real — and if you type shaurya into it, you'll be talking to an agent that has read everything here.
+I'm Shaurya — an AI engineer working on agents, retrieval, and the unglamorous machinery that makes them trustworthy: evals, citations, observability, and the degraded paths nobody designs until production forces them to.
+I finished my Master's at Carnegie Mellon (Information Systems Management — Business Intelligence & Data Analytics, Dec '25), where I built hybrid RAG systems over regulatory text as a research assistant and TA'd the graduate course on operationalizing AI. From there I went straight into the deep end as Founding AI Engineer at Lunon, an AI-native company automating commercial due diligence for private equity — multi-agent pipelines with quality gates, a ~20-tool analyst copilot, and the observability to know what all of it was doing.
+The through-line in my work is verification. Retrieval systems that cite the page they decided from. Extraction pipelines with per-field precision tracked across prompt changes. An open-source framework (rag-verdict) that tests what agents do instead of averaging how their answers score. I think 'systems that think' are only useful if you can check their work.
+Before the AI years I was a software engineer at YMGrad and a sentiment-analysis and computer-vision researcher during undergrad, with a few published papers to show for it. Outside the code I'm drawn to human behavior, storytelling, and systems thinking — the disciplines that explain why some tools feel inevitable and others feel like homework.
+This site is a working example of all of it. The terminal is real — type shaurya into it and you're talking to an agent that has read everything here, cites its sources, and was designed to fail gracefully. That's the job, in miniature.
 ---
 
-# EU Navigator
-A multi-agent RAG system for exploring EU tech, data, and AI legislation — with verified citations.
-stack: LangChain, FAISS, Llama 3.1, BGE-M3, RAGAS, Streamlit
+# Suture
+An AI-native operations layer for a cardiology practice — the full referral-to-outreach loop, built to be audited.
+stack: Python, FastAPI, PostgreSQL, pgvector, LLM extraction, Hybrid RAG
 
 ## Problem
-EU tech, data, and AI legislation is vast, interlinked, and written for lawyers. Anyone trying to actually learn it — students, builders, policy people — has to hold structure in their head that the documents themselves bury. Generic chatbots make this worse: they answer confidently without citations, and legal text is exactly where hallucination is most expensive.
+A cardiology practice runs on paper-shaped work: referrals arrive as faxes and PDFs, prior authorizations mean reading payer policy documents, and patient outreach is manual phone-tag. Automating any of it with LLMs raises the stakes rather than lowering them — a hallucinated field in a referral or a leaked record isn't a bug, it's a patient-safety and compliance incident. The system had to be useful AND provably careful.
 
 ## Approach
-I built EU Navigator as a personal learning portal backed by a multi-agent RAG pipeline. Specialized agents handle planning, retrieval, synthesis, and review, so every answer is drafted against retrieved legal text and then checked before it reaches the user. The corpus preserves the legislation's native structure through section-based chunking, indexed in FAISS with BGE-M3 embeddings and served by Llama 3.1 through LangChain. A Streamlit interface supports modular exploration, progress tracking, and reflection journaling. Faithfulness and relevancy are measured with RAGAS rather than assumed.
+Suture handles the full loop — intake, review, prior-auth, outreach — with the human kept deliberately in it. Documents flow through an LLM extraction pipeline backed by a real eval harness: per-field precision and recall tracked across every prompt change, so quality regressions are caught before they ship. Prior authorization runs on a 3-stage hybrid-RAG engine (structured rules + semantic retrieval) over payer policy documents. Extracted data goes to human-in-the-loop review before anything acts on it, and outreach goes multi-channel only after approval. The security posture is fail-closed: tenant isolation enforced at the ORM layer (a missing tenant context raises, cross-tenant reads return 404), field-level PHI encryption, and a PHI-safe audit log.
 
 ## Outcome
-The result is evidence-based legal analysis with verified citations — a system whose answers can be traced back to the exact section of the exact regulation, evaluated with RAGAS for faithfulness and relevancy. It is also the project that shaped how I think about agent design: separate the roles, verify the output, and never let synthesis outrun retrieval.
+A working AI platform for a domain where 'mostly right' is not a passing grade — extraction with measured per-field accuracy, retrieval that cites the payer policy it decided from, and an architecture where the dangerous failure modes are structurally impossible rather than merely unlikely. The repo stays private for exactly the reasons the system exists; a walkthrough is available on request.
+---
 
-repo: https://github.com/Shauryagulati/EU-Navigator
+# rag-verdict
+Pytest for RAG agents — an open-source framework that tests what your agent does, not just how its answers score.
+stack: Python, pytest, LLM-as-judge, CI, Open source (MIT)
+
+## Problem
+RAG evaluation tools like RAGAS and DeepEval mostly average quality scores over answers. That misses the failures that actually embarrass you in production: the retrieval tool that silently never fired, the citation pointing at a document that doesn't exist, the agent that confidently answers questions its corpus knows nothing about. Scores don't catch behavior; tests do.
+
+## Approach
+rag-verdict treats a RAG agent like code under test. Behavioral probes check whether tools fire when they should, whether every citation resolves to a real document, and whether the agent refuses out-of-corpus questions instead of improvising. A pluggable adapter (Python or HTTP) connects any RAG system in any language. An LLM-as-judge layer with structured output handles the fuzzy cases — and degrades gracefully when no API key is present, so the deterministic checks still run in CI. Results come back as PASS/FAIL/WEAK verdicts, not a decimal that nobody can act on.
+
+## Outcome
+An MIT-licensed framework that turns 'our agent seems fine' into a test suite with verdicts — CI-friendly, language-agnostic, and opinionated about what matters. It's also the distilled lesson of every RAG system I've built: retrieve before you generate, cite what you retrieved, and test the behavior, not the vibes.
+
+repo: https://github.com/Shauryagulati/ragverdict
+---
+
+# Regulatory RAG at CMU
+A hybrid retrieval system over 1,000+ regulatory documents — 94% accuracy with grounded citations.
+stack: E5 embeddings, ChromaDB, BM25, BGE reranking, LangChain, RAGAS
+
+## Problem
+Policy and corporate stakeholders navigating regulation across U.S. states and Europe face thousands of pages of interlinked legal text — and legal text is exactly where LLM hallucination is most expensive. As an AI Research Assistant at Carnegie Mellon, my brief was a system whose answers could be trusted enough to act on: grounded, cited, and measured.
+
+## Approach
+The retrieval core is hybrid: dense E5 embeddings in ChromaDB fused with sparse BM25, then re-ranked with a BGE cross-encoder — because regulatory queries mix precise statutory language with fuzzy intent, and neither dense nor sparse retrieval wins alone. Feeding it is a PDF ingestion pipeline with page parsing, header detection, and overlapping chunking, with data-lineage tracking so every vector traces back to its exact source page. The project grew out of my earlier multi-agent work (a Planner–Retriever–Synthesizer–Reviewer pipeline evaluated with RAGAS at 0.78 faithfulness / 0.74 answer relevancy), which taught me where agent complexity pays and where retrieval quality is the whole game.
+
+## Outcome
+Evaluated across 50+ query sets: 94% accuracy with grounded citations over 1,000+ regulatory documents. The deeper outcome is a working philosophy — separate the roles, verify the output, track lineage from answer back to page — that I've carried into every retrieval system since, including the one running inside this site's terminal.
+
+repo: https://github.com/Shauryagulati/REG-RAG
+---
+
+# This Site, and the Agent Inside It
+The portfolio is its own case study: a terminal with a RAG agent over everything on it, built to run at $0.
+stack: React Router, React Three Fiber, TypeScript, Cloudflare Workers AI, RAG
+
+## Problem
+A portfolio that claims 'AI engineer' should have to prove it on the page. Most sites settle for a chat widget bolted into a corner — no context, no character, and it breaks the moment an API key expires or a free tier runs dry. The bar here was a working AI product with real constraints: zero monthly cost, no broken states, and an interface that says something about how I think.
+
+## Approach
+Everything starts from one content layer: the same typed modules generate the pages, a virtual file system for the built-in terminal, the agent's retrieval corpus, and an llms.txt for AI crawlers — one source of truth, four surfaces. The terminal is summonable from anywhere as a floating window, and typing 'shaurya' boots an agent REPL the way a CLI tool would. Retrieval is deliberately lexical — tf-idf over a small corpus beats an embedding pipeline at this scale — and generation runs on Cloudflare Workers AI's free tier behind a rate-limited function. If the model is unreachable, the agent degrades to retrieval-composed answers instead of failing: the demo can't die. The hero object is the same philosophy applied to 3D — a retro CRT rasterized to live text every frame, made of the same material as the terminal.
+
+## Outcome
+A fully static site with one serverless function, streaming cited answers, and no failure mode a visitor can see — at $0/month. Every architectural decision is inspectable: the site you are reading is the system diagram. It encodes my working rules for agent products: retrieve before you generate, cite what you retrieved, and design the degraded path before the happy one.
+---
+
+# Eyeline
+A free, open-source macOS teleprompter that docks under the notch — read your script while holding eye contact.
+stack: Swift, macOS, Homebrew, Open source
+
+## Problem
+Every video call with a script has the same tell: eyes drifting to a second window. Teleprompter apps exist, but they're paid, cloud-connected, or float awkwardly over your content. The fix wanted to be invisible — literally at the camera.
+
+## Approach
+Eyeline docks the script directly under the MacBook notch — the closest pixels to the lens — so reading looks like eye contact. It's 100% local (nothing leaves the machine), free, open-source, and ships through its own Homebrew tap for a one-line install.
+
+## Outcome
+A small, finished product with real users' problem at its center — and proof that I ship outside the Python/ML lane too: native Swift, macOS platform quirks, packaging, and distribution, end to end.
+
+repo: https://github.com/Shauryagulati/eyeline
 ---
 
 # Air Quality Prediction, End to End
@@ -42,7 +103,7 @@ Most ML course projects end at a notebook with a good metric. Real systems fail 
 I built the whole lifecycle for an air-quality prediction model on the UCI dataset: XGBoost models with every experiment tracked in MLflow, real-time data ingestion through Kafka, and a prediction API packaged in Docker. Monitoring dashboards built with Evidently AI watch for data drift and performance degradation, so the system tells you when it is going stale instead of waiting to be caught.
 
 ## Outcome
-A reproducible, modular pipeline with continuous evaluation baked in — ingestion, training, serving, and monitoring as one system rather than a notebook and a prayer. The project is my working answer to what 'production ML' means beyond the model file.
+A reproducible, modular pipeline with continuous evaluation baked in — ingestion, training, serving, and monitoring as one system rather than a notebook and a prayer. It was my first full answer to what 'production ML' means beyond the model file.
 ---
 
 # Question Answering with BERT on Azure
@@ -56,34 +117,22 @@ Matching a user's question to the sentence that actually answers it is deceptive
 I fine-tuned a BERT-based question-answering system on SQuAD to match queries against candidate answer sentences, using semantic similarity over sentence embeddings — and benchmarked it honestly against Jaccard and TF-IDF baselines to prove the deep model earned its cost. The model was deployed on Azure Machine Learning with a scoring pipeline optimized for both latency and accuracy.
 
 ## Outcome
-Full-stack ML deployment, demonstrated end to end: fine-tuning, packaging, serving, and real-time inference. The baseline comparison discipline — measure the simple thing before shipping the complex one — is a habit I've carried into every system since.
----
-
-# This Site, and the Agent Inside It
-The portfolio is its own case study: a terminal with a RAG agent over everything on it, built to run at $0.
-stack: React Router, React Three Fiber, TypeScript, Cloudflare Workers AI, RAG
-
-## Problem
-A portfolio that claims 'AI product builder' should have to prove it on the page. Most sites settle for a chat widget bolted into a corner — no context, no character, and it breaks the moment an API key expires or a free tier runs dry. The bar here was a working AI product with real constraints: zero monthly cost, no broken states, and an interface that says something about how I think.
-
-## Approach
-Everything starts from one content layer: the same typed modules generate the pages, a virtual file system for the built-in terminal, the agent's retrieval corpus, and an llms.txt for AI crawlers — one source of truth, four surfaces. The terminal is summonable from anywhere (or usable right on the homepage), and typing 'shaurya' boots an agent REPL the way a CLI tool would. Retrieval is deliberately lexical — tf-idf over a six-document corpus beats an embedding pipeline at this scale — and generation runs on Cloudflare Workers AI's free tier behind a rate-limited Pages Function. If the model is unreachable, the agent degrades to retrieval-composed answers instead of failing: the demo can't die. The hero object is the same philosophy applied to 3D — a retro CRT rasterized to live text every frame, so the 'model' is made of the same material as the terminal.
-
-## Outcome
-A fully static site with one serverless function, streaming cited answers, and no failure mode that a visitor can see — at $0/month. Every architectural decision is inspectable: the site you are reading is the system diagram. It also encodes my working rules for agent products: retrieve before you generate, cite what you retrieved, and design the degraded path before the happy one.
+Full-stack ML deployment, demonstrated end to end: fine-tuning, packaging, serving, and real-time inference. The baseline-comparison discipline — measure the simple thing before shipping the complex one — is a habit I've carried into every system since.
 ---
 
 # Resume — Shaurya Gulati
 
 ## Education
-- Carnegie Mellon University — Master's degree. Graduate study focused on machine learning systems and AI products.
+- Carnegie Mellon University — Master's in Information Systems Management — Business Intelligence & Data Analytics (Aug 2024 – Dec 2025). Coursework: Computational Data Science, Machine Learning, Applications of NLP and LLMs, Distributed Systems, Applied AI.
+- Chandigarh University — B.E. Computer Science — specialization in Artificial Intelligence & Machine Learning (2018 – 2022). Undergraduate researcher in sentiment analysis and computer vision; published at international conferences.
 
 ## Skills
-- AI / ML: RAG systems, Multi-agent applications, LLM evaluation (RAGAS), Fine-tuning (BERT), XGBoost
-- Engineering: Python, LangChain, FAISS, Hugging Face, Docker, Kafka, MLflow, Azure ML, TypeScript / React
-- Practice: Experiment tracking, Model monitoring (Evidently), Data drift detection, Product thinking
+- AI / LLM: Agents, RAG, Claude Agent SDK, OpenAI API, LangChain, MCP, LLM-as-judge, Evals, Prompt engineering & caching
+- Retrieval: pgvector, FAISS, Hybrid search, BM25, RRF fusion, BGE cross-encoder reranking, Query decomposition
+- Backend: Python, FastAPI, PostgreSQL, Redis, SQLAlchemy, Alembic, asyncio, SSE streaming, SQL / MySQL
+- Observability / Infra: Langfuse, OpenTelemetry, Docker, GitHub Actions, Git
 
-PDF: https://shauryagulati.dev/resume.pdf
+PDF: https://shauryagulati.me/resume.pdf
 ---
 
 # Contact

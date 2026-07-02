@@ -2,9 +2,10 @@ export const about = {
   title: "About",
   /** Paragraphs, in order. Written to be read — and to be `cat`-ed. */
   body: [
-    "I'm Shaurya — an AI product builder and data scientist, currently pursuing a Master's at Carnegie Mellon University.",
-    "My work sits where machine learning meets product: RAG pipelines that cite their sources, multi-agent systems that check their own output, generative tools that people actually use. I care as much about how a system behaves in someone's hands as I do about how it scores on a benchmark.",
-    "Outside the code, I'm drawn to human behavior, storytelling, and systems thinking — the disciplines that explain why some tools feel inevitable and others feel like homework. That lens shapes what I build: products should not just work; they should think, adapt, and earn their place in the workflow.",
-    "This site is a working example. The terminal in the corner is real — and if you type shaurya into it, you'll be talking to an agent that has read everything here.",
+    "I'm Shaurya — an AI engineer working on agents, retrieval, and the unglamorous machinery that makes them trustworthy: evals, citations, observability, and the degraded paths nobody designs until production forces them to.",
+    "I finished my Master's at Carnegie Mellon (Information Systems Management — Business Intelligence & Data Analytics, Dec '25), where I built hybrid RAG systems over regulatory text as a research assistant and TA'd the graduate course on operationalizing AI. From there I went straight into the deep end as Founding AI Engineer at Lunon, an AI-native company automating commercial due diligence for private equity — multi-agent pipelines with quality gates, a ~20-tool analyst copilot, and the observability to know what all of it was doing.",
+    "The through-line in my work is verification. Retrieval systems that cite the page they decided from. Extraction pipelines with per-field precision tracked across prompt changes. An open-source framework (rag-verdict) that tests what agents do instead of averaging how their answers score. I think 'systems that think' are only useful if you can check their work.",
+    "Before the AI years I was a software engineer at YMGrad and a sentiment-analysis and computer-vision researcher during undergrad, with a few published papers to show for it. Outside the code I'm drawn to human behavior, storytelling, and systems thinking — the disciplines that explain why some tools feel inevitable and others feel like homework.",
+    "This site is a working example of all of it. The terminal is real — type shaurya into it and you're talking to an agent that has read everything here, cites its sources, and was designed to fail gracefully. That's the job, in miniature.",
   ],
 } as const;

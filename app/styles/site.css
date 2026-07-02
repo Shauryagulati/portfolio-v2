@@ -278,6 +278,10 @@ li:last-child .work-row {
   letter-spacing: 0.03em;
 }
 
+.earlier-label {
+  margin-top: var(--space-6);
+}
+
 .work-all {
   display: inline-block;
   margin-top: var(--space-4);

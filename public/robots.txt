@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shauryagulati.dev/sitemap.xml
+Sitemap: https://shauryagulati.me/sitemap.xml

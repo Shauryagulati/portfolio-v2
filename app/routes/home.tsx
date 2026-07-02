@@ -38,9 +38,7 @@ export default function Home() {
       <section className="hero">
         <div className="hero-text">
           <Reveal order={0}>
-            <p className="mono hero-kicker">
-              {site.role} — {site.school}
-            </p>
+            <p className="mono hero-kicker">{site.kicker}</p>
           </Reveal>
           <Reveal order={1}>
             <h1 className="hero-name">{site.name}</h1>

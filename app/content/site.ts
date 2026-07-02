@@ -4,13 +4,14 @@
 export const site = {
   name: "Shaurya Gulati",
   handle: "shaurya",
-  role: "AI product builder",
+  role: "AI engineer",
   school: "Carnegie Mellon University",
+  kicker: "AI engineer — agents, RAG, evals · CMU MISM '25",
   thesis: "I build systems that think — and the products around them.",
   intro:
-    "AI product builder and data scientist, currently pursuing a Master's at Carnegie Mellon. I design and ship intelligent systems: RAG pipelines, multi-agent applications, and the generative-AI products that put them in people's hands.",
+    "AI engineer working on agents, retrieval, and evaluation. Carnegie Mellon MISM-BIDA graduate ('25), most recently Founding AI Engineer at Lunon, where I built the multi-agent pipeline and analyst copilot behind automated commercial due diligence. I care about systems that cite their sources, tests that catch agents misbehaving, and products that earn their place in a workflow.",
   /** Set to the real domain once purchased; used by SEO generation. */
-  url: "https://shauryagulati.dev",
+  url: "https://shauryagulati.me",
   email: "i.shauryagulati@gmail.com",
   github: "https://github.com/Shauryagulati",
   linkedin: "https://www.linkedin.com/in/shauryagulati/",
