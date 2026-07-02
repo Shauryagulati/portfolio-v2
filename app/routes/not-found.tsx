@@ -13,6 +13,7 @@ export default function NotFound() {
   useEffect(() => setPathname(location.pathname), []);
   return (
     <main className="page subpage">
+      <h1 className="visually-hidden">Page not found</h1>
       <div className="term-artifact nf-term" role="presentation">
         <span className="term-artifact-bar" aria-hidden="true">
           <i /> <i /> <i />

@@ -124,7 +124,7 @@ export default function AsciiCrt() {
         <CrtModel thinking={thinking} excited={excited} />
         <AsciiOut
           characters=" .:-·=+*shrya#%@"
-          resolution={coarse ? 0.15 : 0.21}
+          resolution={coarse ? 0.24 : 0.21}
         />
       </Canvas>
     </div>

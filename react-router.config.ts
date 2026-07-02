@@ -8,10 +8,12 @@ export default {
     "/",
     "/projects",
     ...projects.map((p) => `/projects/${p.slug}`),
-    ...(posts.length ? ["/writing"] : []),
+    "/writing", // always prerendered — direct loads must never hit 404.html
     ...posts.map((p) => `/writing/${p.slug}`),
     "/about",
     "/resume",
-    "/404", // catch-all renders the terminal joke; postbuild copies to 404.html
+    // NOTE: 404.html is generated as PLAIN static HTML by scripts/gen-404.mjs
+    // (postbuild). Serving a prerendered React page for unknown paths caused
+    // hydration mismatches: route tree ≠ /404, and the page rendered twice.
   ],
 } satisfies Config;

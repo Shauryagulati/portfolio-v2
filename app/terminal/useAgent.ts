@@ -29,7 +29,10 @@ export function useAgent(shell: ReturnType<typeof useShell>) {
         sh.print("dim", "agent detached. you're back in the shell.");
         return;
       }
-      if (busy.current) return;
+      if (busy.current) {
+        sh.print("dim", "(still answering — give me a second, then re-ask)");
+        return;
+      }
       busy.current = true;
       window.dispatchEvent(new CustomEvent("agent:thinking"));
       sh.print("dim", "▸ thinking…");

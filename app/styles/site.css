@@ -689,4 +689,15 @@ li:last-child .work-row {
     grid-template-columns: 1fr;
     gap: var(--space-2);
   }
+
+  /* diagrams scroll inside their own container instead of shrinking
+     labels below legibility */
+  .diagram {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .diagram svg {
+    min-width: 640px;
+  }
 }

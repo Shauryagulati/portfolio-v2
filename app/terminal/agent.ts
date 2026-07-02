@@ -24,7 +24,9 @@ export function localAnswer(query: string): AgentAnswer {
       source: "~/contact.md",
     };
   }
-  if (/(who is|who's|about)/.test(q) && q.length < 40) {
+  // only the literal "who is he / about him" — a bare `about` substring
+  // hijacked questions like "tell me about eu navigator"
+  if (/^(who is|who'?s)\b/.test(q) || /^about\b/.test(q.trim())) {
     return {
       text: `${site.name} — ${site.role} at ${site.school}. ${site.thesis}`,
       source: "~/about.md",

@@ -54,11 +54,11 @@ export function useShell(close: () => void) {
       const input = raw.trim();
       print("in", `${prompt} ${input}`);
       if (!input) return;
+      history.current.push(input); // agent questions are history too
       if (mode === "agent") {
         agentHandler.current?.(input);
         return;
       }
-      history.current.push(input);
       const [name, ...args] = input.split(/\s+/);
       const ctx: ShellCtx = {
         cwd,
@@ -90,9 +90,11 @@ export function useShell(close: () => void) {
     [mode, cwd, prompt, print, clear, close, navigate, toggleTheme],
   );
 
-  /** Tab completion over commands and current-dir entries. */
+  /** Tab completion over commands and current-dir entries.
+   *  Unique hit → completed string. Several hits → candidate list
+   *  (the input shows them like a real shell). None → null. */
   const complete = useCallback(
-    (input: string): string | null => {
+    (input: string): string | string[] | null => {
       const parts = input.split(/\s+/);
       const last = parts[parts.length - 1] ?? "";
       const pool =
@@ -106,7 +108,8 @@ export function useShell(close: () => void) {
               return listDir(dir).map((n) => dirPart + n);
             })();
       const hits = pool.filter((p) => p.startsWith(last) && p !== last);
-      if (hits.length !== 1) return null;
+      if (!hits.length) return null;
+      if (hits.length > 1) return hits;
       parts[parts.length - 1] = hits[0];
       return parts.join(" ");
     },

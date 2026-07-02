@@ -21,9 +21,14 @@ export const TermInput = forwardRef<
       setValue("");
       histIdx.current = -1;
     } else if (e.key === "Tab") {
+      if (e.shiftKey) return; // let Shift+Tab move focus (a11y escape hatch)
       e.preventDefault();
       const hit = shell.complete(value);
-      if (hit) setValue(hit);
+      if (Array.isArray(hit)) {
+        shell.print("dim", hit.join("   ")); // ambiguous → show candidates
+      } else if (hit) {
+        setValue(hit);
+      }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       const h = shell.history.current;

@@ -69,7 +69,13 @@ export function Terminal() {
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
             onClick={(e) => {
               e.stopPropagation();
+              // don't destroy a drag-selection (copying an email/url matters)
+              if (window.getSelection()?.toString()) return;
               inputRef.current?.focus();
+            }}
+            onKeyDown={(e) => {
+              // Escape closes no matter where focus sits inside the dialog
+              if (e.key === "Escape") close();
             }}
           >
             <div className="term-window-bar">

@@ -41,7 +41,10 @@ export function TerminalArtifact() {
   return (
     <div
       className="term-artifact term-artifact-live"
-      onClick={() => inputRef.current?.focus()}
+      onClick={() => {
+        if (window.getSelection()?.toString()) return;
+        inputRef.current?.focus();
+      }}
     >
       <span className="term-artifact-bar" aria-hidden="true">
         <i /> <i /> <i />
@@ -78,7 +81,9 @@ export function TerminalArtifact() {
         </span>
       </span>
       <span className="term-artifact-hint mono">
-        {site.terminalHint} — this prompt is real, start typing
+        {shell.mode === "agent"
+          ? "agent session active — type exit to leave"
+          : `${site.terminalHint} — this prompt is real, start typing`}
       </span>
     </div>
   );
