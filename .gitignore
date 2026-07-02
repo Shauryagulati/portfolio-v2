@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+.DS_Store
+
+# private working artifacts — never commit
+docs/superpowers/
+.superpowers/
+_notes/
+build/
