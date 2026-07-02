@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router";
 import { site } from "~/content/site";
 import { projects, getProject } from "~/content/projects";
 import { Reveal } from "~/components/Reveal";
+import { ArchDiagram } from "~/components/ArchDiagram";
 import { pageMeta } from "~/lib/seo";
 
 export function meta({ params }: { params: { slug: string } }) {
@@ -47,9 +48,12 @@ export default function Project() {
       <Reveal order={3}>
         <p className="mono case-stack">{p.stack.join(" · ")}</p>
       </Reveal>
+      <Reveal order={4}>
+        <ArchDiagram slug={p.slug} />
+      </Reveal>
 
       {SECTIONS.map((s, n) => (
-        <Reveal key={s} order={n + 4} as="section">
+        <Reveal key={s} order={n + 5} as="section">
           <div className="case-section">
             <h2 className="mono section-label">{s}</h2>
             <p className="prose">{p[s]}</p>
@@ -57,7 +61,7 @@ export default function Project() {
         </Reveal>
       ))}
 
-      <Reveal order={7}>
+      <Reveal order={8}>
         <div className="case-footer">
           {p.github ? (
             <a className="mono" href={p.github} rel="noreferrer">

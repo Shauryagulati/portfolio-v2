@@ -334,6 +334,37 @@ li:last-child .work-row {
   margin: 0;
 }
 
+.diagram {
+  margin: 0 0 var(--space-4);
+  color: var(--ink-2);
+}
+
+.diagram svg {
+  width: 100%;
+  height: auto;
+}
+
+.diagram-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.diagram-sub {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  fill: var(--ink-3);
+}
+
+.diagram-edge-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  fill: var(--ink-3);
+}
+
+.diagram-caption {
+  margin-top: var(--space-2);
+}
+
 .case-footer {
   display: flex;
   justify-content: space-between;

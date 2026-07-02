@@ -1,0 +1,228 @@
+/** Ink-style architecture diagrams — hairline boxes, mono labels,
+ *  currentColor so they live in both themes. Data-driven so each case
+ *  study stays honest and small. */
+
+interface Node {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  label: string;
+  sub?: string;
+  accent?: boolean;
+}
+
+interface Edge {
+  from: string;
+  to: string;
+  label?: string;
+  dashed?: boolean;
+}
+
+interface Diagram {
+  nodes: Node[];
+  edges: Edge[];
+  h: number;
+}
+
+const H = 44;
+
+const DIAGRAMS: Record<string, Diagram> = {
+  "eu-navigator": {
+    h: 190,
+    nodes: [
+      { id: "q", x: 10, y: 20, w: 88, label: "question" },
+      { id: "plan", x: 138, y: 20, w: 96, label: "planner", sub: "agent" },
+      { id: "ret", x: 274, y: 20, w: 104, label: "retriever", sub: "agent" },
+      { id: "faiss", x: 274, y: 126, w: 104, label: "FAISS", sub: "BGE-M3" },
+      { id: "syn", x: 418, y: 20, w: 110, label: "synthesizer", sub: "llama 3.1" },
+      { id: "rev", x: 568, y: 20, w: 96, label: "reviewer", sub: "agent" },
+      { id: "ans", x: 704, y: 20, w: 116, label: "cited answer", accent: true },
+      { id: "ragas", x: 568, y: 126, w: 116, label: "RAGAS", sub: "evaluation" },
+    ],
+    edges: [
+      { from: "q", to: "plan" },
+      { from: "plan", to: "ret" },
+      { from: "ret", to: "faiss", label: "top-k" },
+      { from: "ret", to: "syn" },
+      { from: "syn", to: "rev" },
+      { from: "rev", to: "ans" },
+      { from: "ragas", to: "rev", dashed: true },
+    ],
+  },
+  "air-quality-mlops": {
+    h: 190,
+    nodes: [
+      { id: "uci", x: 10, y: 20, w: 96, label: "UCI data" },
+      { id: "kafka", x: 146, y: 20, w: 96, label: "Kafka", sub: "streaming" },
+      { id: "train", x: 282, y: 20, w: 110, label: "XGBoost", sub: "training" },
+      { id: "mlflow", x: 282, y: 126, w: 110, label: "MLflow", sub: "experiments" },
+      { id: "api", x: 432, y: 20, w: 116, label: "prediction API", sub: "docker" },
+      { id: "mon", x: 588, y: 20, w: 122, label: "Evidently", sub: "drift monitor", accent: true },
+    ],
+    edges: [
+      { from: "uci", to: "kafka" },
+      { from: "kafka", to: "train" },
+      { from: "train", to: "mlflow", label: "runs" },
+      { from: "train", to: "api" },
+      { from: "api", to: "mon" },
+      { from: "mon", to: "train", dashed: true, label: "retrain signal" },
+    ],
+  },
+  "bert-qa": {
+    h: 190,
+    nodes: [
+      { id: "squad", x: 10, y: 20, w: 96, label: "SQuAD" },
+      { id: "ft", x: 146, y: 20, w: 116, label: "fine-tune", sub: "BERT · HF" },
+      { id: "base", x: 146, y: 126, w: 116, label: "baselines", sub: "TF-IDF · Jaccard" },
+      { id: "score", x: 302, y: 20, w: 128, label: "similarity scoring", sub: "embeddings" },
+      { id: "azure", x: 470, y: 20, w: 120, label: "Azure ML", sub: "endpoint" },
+      { id: "ans", x: 630, y: 20, w: 116, label: "answer", sub: "real-time", accent: true },
+    ],
+    edges: [
+      { from: "squad", to: "ft" },
+      { from: "ft", to: "score" },
+      { from: "base", to: "score", dashed: true, label: "benchmark" },
+      { from: "score", to: "azure" },
+      { from: "azure", to: "ans" },
+    ],
+  },
+  "this-site": {
+    h: 190,
+    nodes: [
+      { id: "content", x: 10, y: 73, w: 116, label: "app/content/*", sub: "one source" },
+      { id: "pages", x: 186, y: 6, w: 96, label: "pages" },
+      { id: "vfs", x: 186, y: 73, w: 96, label: "terminal vfs" },
+      { id: "llms", x: 186, y: 140, w: 96, label: "llms.txt" },
+      { id: "repl", x: 334, y: 73, w: 110, label: "shaurya REPL", accent: true },
+      { id: "fn", x: 494, y: 30, w: 120, label: "pages function", sub: "rate-limited" },
+      { id: "ai", x: 664, y: 30, w: 110, label: "workers ai", sub: "llama 3.1 8b" },
+      { id: "fb", x: 494, y: 126, w: 120, label: "local fallback", sub: "tf-idf compose" },
+    ],
+    edges: [
+      { from: "content", to: "pages" },
+      { from: "content", to: "vfs" },
+      { from: "content", to: "llms" },
+      { from: "vfs", to: "repl" },
+      { from: "repl", to: "fn", label: "remote first" },
+      { from: "fn", to: "ai" },
+      { from: "repl", to: "fb", dashed: true, label: "if unreachable" },
+    ],
+  },
+};
+
+function mid(n: Node) {
+  return { cx: n.x + n.w / 2, cy: n.y + H / 2 };
+}
+
+/** Straight edge between node borders, arrowhead at the target. */
+function EdgeLine({ a, b, edge }: { a: Node; b: Node; edge: Edge }) {
+  const A = mid(a);
+  const B = mid(b);
+  // clip the line at each node's border (horizontal or vertical dominant)
+  const dx = B.cx - A.cx;
+  const dy = B.cy - A.cy;
+  let x1 = A.cx, y1 = A.cy, x2 = B.cx, y2 = B.cy;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    x1 = dx > 0 ? a.x + a.w : a.x;
+    x2 = dx > 0 ? b.x : b.x + b.w;
+    y1 = A.cy + (Math.abs(dy) > 1 ? Math.sign(dy) * 0 : 0);
+  } else {
+    y1 = dy > 0 ? a.y + H : a.y;
+    y2 = dy > 0 ? b.y : b.y + H;
+  }
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  return (
+    <g>
+      <line
+        x1={x1}
+        y1={y1}
+        x2={x2}
+        y2={y2}
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeDasharray={edge.dashed ? "4 4" : undefined}
+        opacity="0.45"
+        markerEnd="url(#arrow)"
+      />
+      {edge.label && (
+        <text
+          x={mx}
+          y={my - 6}
+          textAnchor="middle"
+          className="diagram-edge-label"
+        >
+          {edge.label}
+        </text>
+      )}
+    </g>
+  );
+}
+
+export function ArchDiagram({ slug }: { slug: string }) {
+  const d = DIAGRAMS[slug];
+  if (!d) return null;
+  const byId = Object.fromEntries(d.nodes.map((n) => [n.id, n]));
+  return (
+    <figure className="diagram">
+      <svg
+        viewBox={`0 0 840 ${d.h}`}
+        role="img"
+        aria-label="Architecture diagram"
+      >
+        <defs>
+          <marker
+            id="arrow"
+            viewBox="0 0 8 8"
+            refX="7"
+            refY="4"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 8 4 L 0 8" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          </marker>
+        </defs>
+        {d.edges.map((e, i) => (
+          <EdgeLine key={i} a={byId[e.from]} b={byId[e.to]} edge={e} />
+        ))}
+        {d.nodes.map((n) => (
+          <g key={n.id}>
+            <rect
+              x={n.x}
+              y={n.y}
+              width={n.w}
+              height={H}
+              rx="6"
+              fill="var(--bg)"
+              stroke={n.accent ? "var(--accent)" : "currentColor"}
+              strokeWidth="1"
+              opacity={n.accent ? 1 : 0.6}
+            />
+            <text
+              x={n.x + n.w / 2}
+              y={n.y + (n.sub ? 19 : 27)}
+              textAnchor="middle"
+              className="diagram-label"
+              fill={n.accent ? "var(--accent)" : "currentColor"}
+            >
+              {n.label}
+            </text>
+            {n.sub && (
+              <text
+                x={n.x + n.w / 2}
+                y={n.y + 34}
+                textAnchor="middle"
+                className="diagram-sub"
+              >
+                {n.sub}
+              </text>
+            )}
+          </g>
+        ))}
+      </svg>
+      <figcaption className="mono diagram-caption">architecture</figcaption>
+    </figure>
+  );
+}
