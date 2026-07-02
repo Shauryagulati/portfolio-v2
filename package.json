@@ -30,7 +30,8 @@
     "build": "react-router build",
     "typecheck": "react-router typegen && tsc",
     "preview": "npx serve build/client",
-    "prebuild": "tsx scripts/gen-static.ts && node scripts/og.mjs"
+    "prebuild": "tsx scripts/gen-static.ts && node scripts/og.mjs",
+    "postbuild": "cp build/client/404/index.html build/client/404.html"
   },
   "name": "portfolio-v2",
   "version": "2.0.0",

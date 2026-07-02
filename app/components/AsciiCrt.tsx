@@ -15,9 +15,13 @@ function CrtModel({ thinking }: { thinking: boolean }) {
   const spin = useRef(0);
   const { pointer } = useThree();
 
+  const still =
+    typeof matchMedia !== "undefined" &&
+    matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   useFrame((state, dt) => {
     const g = group.current;
-    if (!g) return;
+    if (!g || still) return;
     if (thinking) {
       // the agent is generating — the machine whirs
       spin.current += dt * 2.6;

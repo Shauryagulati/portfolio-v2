@@ -531,6 +531,21 @@ li:last-child .work-row {
 /* ————— responsive ————— */
 
 @media (max-width: 860px) {
+  .nav {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+    padding-block: var(--space-3);
+  }
+
+  .nav-name {
+    flex-basis: 100%;
+  }
+
+  .nav-links {
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     min-height: 0;
