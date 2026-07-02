@@ -17,6 +17,7 @@ import "~/styles/site.css";
 import { themeBootScript } from "~/lib/theme";
 import { personJsonLd } from "~/lib/seo";
 import { Terminal } from "~/terminal/Terminal";
+import { TerminalProvider } from "~/terminal/TerminalContext";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   // suppressHydrationWarning: data-theme is set pre-hydration by the boot script
@@ -46,9 +47,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <>
+    <TerminalProvider>
       <Outlet />
       <Terminal />
-    </>
+    </TerminalProvider>
   );
 }

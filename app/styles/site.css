@@ -183,6 +183,28 @@
   }
 }
 
+.term-artifact-live {
+  cursor: text;
+}
+
+.term-artifact-live .term-input-row {
+  display: flex;
+  gap: 0.6em;
+  align-items: baseline;
+}
+
+.term-expand {
+  margin-left: auto;
+  color: var(--term-dim);
+  font-size: 0.8rem;
+  line-height: 1;
+  text-transform: none;
+}
+
+.term-expand:hover {
+  color: var(--term-accent);
+}
+
 .term-artifact-hint {
   display: block;
   margin-top: 0.8rem;

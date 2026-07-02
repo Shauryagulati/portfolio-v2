@@ -1,23 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { site } from "~/content/site";
-import { useShell } from "./useShell";
-import { useAgent } from "./useAgent";
+import { useTerminal } from "./TerminalContext";
+import { TermInput } from "./TermInput";
 
-/** The summonable terminal. `/` or ⌘K from anywhere, Esc to dismiss.
- *  Shell mode is instant and offline; typing `shaurya` boots the agent. */
+/** The overlay window — the big view of the shared terminal session.
+ *  `/` or ⌘K from anywhere, Esc to dismiss. */
 export function Terminal() {
-  const [open, setOpen] = useState(false);
-  const close = useCallback(() => setOpen(false), []);
-  const shell = useShell(close);
-  useAgent(shell);
+  const { shell, open, setOpen, close } = useTerminal();
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState("");
-  const histIdx = useRef(-1);
   const reduced = useReducedMotion();
 
-  // global summon hotkeys + artifact clicks
+  // global summon hotkeys + artifact/nav clicks
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement;
@@ -35,12 +30,15 @@ export function Terminal() {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("terminal:open", onOpen);
     };
-  }, []);
+  }, [setOpen]);
 
   useEffect(() => {
     if (open) {
       shell.boot();
+      window.dispatchEvent(new CustomEvent("terminal:visible"));
       requestAnimationFrame(() => inputRef.current?.focus());
+    } else {
+      window.dispatchEvent(new CustomEvent("terminal:hidden"));
     }
   }, [open, shell]);
 
@@ -49,38 +47,6 @@ export function Terminal() {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;
   }, [shell.lines, open]);
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      shell.exec(value);
-      setValue("");
-      histIdx.current = -1;
-    } else if (e.key === "Tab") {
-      e.preventDefault();
-      const hit = shell.complete(value);
-      if (hit) setValue(hit);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      const h = shell.history.current;
-      if (!h.length) return;
-      histIdx.current =
-        histIdx.current === -1
-          ? h.length - 1
-          : Math.max(0, histIdx.current - 1);
-      setValue(h[histIdx.current]);
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      const h = shell.history.current;
-      if (histIdx.current === -1) return;
-      histIdx.current += 1;
-      if (histIdx.current >= h.length) {
-        histIdx.current = -1;
-        setValue("");
-      } else setValue(h[histIdx.current]);
-    } else if (e.key === "Escape") {
-      close();
-    }
-  };
 
   return (
     <AnimatePresence>
@@ -124,23 +90,18 @@ export function Terminal() {
             <div className="term-scroll" ref={scrollRef}>
               {shell.lines.map((l) => (
                 <div key={l.id} className={`term-line term-${l.kind}`}>
-                  {l.text || " "}
+                  {l.text || " "}
                 </div>
               ))}
               <div className="term-input-row">
                 <span className={shell.mode === "agent" ? "term-green" : "term-dim"}>
                   {shell.prompt}
                 </span>
-                <input
+                <TermInput
                   ref={inputRef}
-                  className="term-input"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                  onKeyDown={onKeyDown}
-                  spellCheck={false}
-                  autoCapitalize="off"
-                  autoComplete="off"
-                  aria-label="Terminal input"
+                  shell={shell}
+                  onEscape={close}
+                  ariaLabel="Terminal input"
                 />
               </div>
             </div>

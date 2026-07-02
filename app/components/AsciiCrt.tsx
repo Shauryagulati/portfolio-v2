@@ -10,7 +10,13 @@ import { AsciiOut } from "./AsciiOut";
 
 const TWO_PI = Math.PI * 2;
 
-function CrtModel({ thinking }: { thinking: boolean }) {
+function CrtModel({
+  thinking,
+  excited,
+}: {
+  thinking: boolean;
+  excited: boolean;
+}) {
   const group = useRef<Group>(null);
   const spin = useRef(0);
   const { pointer } = useThree();
@@ -38,6 +44,10 @@ function CrtModel({ thinking }: { thinking: boolean }) {
     g.rotation.x += (targetX - g.rotation.x) * Math.min(1, dt * 3);
     // idle breathing
     g.position.y = Math.sin(t * 0.8) * 0.06;
+    // the terminal is open — the machine perks up
+    const targetScale = excited ? 1.06 : 1;
+    const s = g.scale.x + (targetScale - g.scale.x) * Math.min(1, dt * 4);
+    g.scale.setScalar(s);
   });
 
   return (
@@ -80,17 +90,24 @@ function CrtModel({ thinking }: { thinking: boolean }) {
 
 export default function AsciiCrt() {
   const [thinking, setThinking] = useState(false);
+  const [excited, setExcited] = useState(false);
   const [coarse, setCoarse] = useState(false);
 
   useEffect(() => {
     const on = () => setThinking(true);
     const off = () => setThinking(false);
+    const perk = () => setExcited(true);
+    const calm = () => setExcited(false);
     window.addEventListener("agent:thinking", on);
     window.addEventListener("agent:idle", off);
+    window.addEventListener("terminal:visible", perk);
+    window.addEventListener("terminal:hidden", calm);
     setCoarse(matchMedia("(pointer: coarse)").matches);
     return () => {
       window.removeEventListener("agent:thinking", on);
       window.removeEventListener("agent:idle", off);
+      window.removeEventListener("terminal:visible", perk);
+      window.removeEventListener("terminal:hidden", calm);
     };
   }, []);
 
@@ -104,7 +121,7 @@ export default function AsciiCrt() {
         <ambientLight intensity={0.6} />
         <directionalLight position={[3, 4, 5]} intensity={1.8} />
         <directionalLight position={[-4, -2, 2]} intensity={0.5} />
-        <CrtModel thinking={thinking} />
+        <CrtModel thinking={thinking} excited={excited} />
         <AsciiOut
           characters=" .:-·=+*shrya#%@"
           resolution={coarse ? 0.15 : 0.21}
