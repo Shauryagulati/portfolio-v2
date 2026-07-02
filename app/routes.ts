@@ -10,6 +10,8 @@ export default [
     index("routes/home.tsx"),
     route("projects", "routes/projects.tsx"),
     route("projects/:slug", "routes/project.tsx"),
+    route("writing", "routes/writing.tsx"),
+    route("writing/:slug", "routes/post.tsx"),
     route("about", "routes/about.tsx"),
     route("resume", "routes/resume.tsx"),
     route("*", "routes/not-found.tsx"),

@@ -59,6 +59,20 @@ I fine-tuned a BERT-based question-answering system on SQuAD to match queries ag
 Full-stack ML deployment, demonstrated end to end: fine-tuning, packaging, serving, and real-time inference. The baseline comparison discipline — measure the simple thing before shipping the complex one — is a habit I've carried into every system since.
 ---
 
+# This Site, and the Agent Inside It
+The portfolio is its own case study: a terminal with a RAG agent over everything on it, built to run at $0.
+stack: React Router, React Three Fiber, TypeScript, Cloudflare Workers AI, RAG
+
+## Problem
+A portfolio that claims 'AI product builder' should have to prove it on the page. Most sites settle for a chat widget bolted into a corner — no context, no character, and it breaks the moment an API key expires or a free tier runs dry. The bar here was a working AI product with real constraints: zero monthly cost, no broken states, and an interface that says something about how I think.
+
+## Approach
+Everything starts from one content layer: the same typed modules generate the pages, a virtual file system for the built-in terminal, the agent's retrieval corpus, and an llms.txt for AI crawlers — one source of truth, four surfaces. The terminal is summonable from anywhere (or usable right on the homepage), and typing 'shaurya' boots an agent REPL the way a CLI tool would. Retrieval is deliberately lexical — tf-idf over a six-document corpus beats an embedding pipeline at this scale — and generation runs on Cloudflare Workers AI's free tier behind a rate-limited Pages Function. If the model is unreachable, the agent degrades to retrieval-composed answers instead of failing: the demo can't die. The hero object is the same philosophy applied to 3D — a retro CRT rasterized to live text every frame, so the 'model' is made of the same material as the terminal.
+
+## Outcome
+A fully static site with one serverless function, streaming cited answers, and no failure mode that a visitor can see — at $0/month. Every architectural decision is inspectable: the site you are reading is the system diagram. It also encodes my working rules for agent products: retrieve before you generate, cite what you retrieved, and design the degraded path before the happy one.
+---
+
 # Resume — Shaurya Gulati
 
 ## Education
