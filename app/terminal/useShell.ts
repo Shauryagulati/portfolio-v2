@@ -31,6 +31,15 @@ export function useShell(close: () => void) {
 
   const clear = useCallback(() => setLines([]), []);
 
+  /** Grow the last line in place — the agent streams through this. */
+  const appendToLast = useCallback((chunk: string) => {
+    setLines((prev) => {
+      if (!prev.length) return prev;
+      const last = prev[prev.length - 1];
+      return [...prev.slice(0, -1), { ...last, text: last.text + chunk }];
+    });
+  }, []);
+
   const boot = useCallback(() => {
     if (booted.current) return;
     booted.current = true;
@@ -113,6 +122,7 @@ export function useShell(close: () => void) {
     complete,
     boot,
     print,
+    appendToLast,
     history,
     agentHandler,
   };
