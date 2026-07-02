@@ -1,8 +1,26 @@
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { site } from "~/content/site";
 import { projects } from "~/content/projects";
 import { Reveal } from "~/components/Reveal";
 import { TerminalArtifact } from "~/components/TerminalArtifact";
+
+const AsciiCrt = lazy(() => import("~/components/AsciiCrt"));
+
+/** Canvas only after hydration — keeps prerendered HTML clean. */
+function HeroObject() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
+  return (
+    <div className="hero-object" aria-hidden="true">
+      {ready && (
+        <Suspense fallback={null}>
+          <AsciiCrt />
+        </Suspense>
+      )}
+    </div>
+  );
+}
 
 export function meta() {
   return [
@@ -32,7 +50,7 @@ export default function Home() {
             <TerminalArtifact />
           </Reveal>
         </div>
-        <div className="hero-object" id="crt-slot" aria-hidden="true" />
+        <HeroObject />
       </section>
 
       <section className="work">

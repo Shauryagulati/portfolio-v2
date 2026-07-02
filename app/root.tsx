@@ -17,8 +17,9 @@ import "~/styles/site.css";
 import { themeBootScript } from "~/lib/theme";
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  // suppressHydrationWarning: data-theme is set pre-hydration by the boot script
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
