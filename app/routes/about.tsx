@@ -1,12 +1,14 @@
 import { site } from "~/content/site";
 import { about } from "~/content/about";
 import { Reveal } from "~/components/Reveal";
+import { pageMeta } from "~/lib/seo";
 
 export function meta() {
-  return [
-    { title: `About — ${site.name}` },
-    { name: "description", content: about.body[0] },
-  ];
+  return pageMeta({
+    title: `About — ${site.name}`,
+    description: about.body[0],
+    path: "/about",
+  });
 }
 
 export default function About() {

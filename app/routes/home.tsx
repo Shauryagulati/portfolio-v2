@@ -4,6 +4,7 @@ import { site } from "~/content/site";
 import { projects } from "~/content/projects";
 import { Reveal } from "~/components/Reveal";
 import { TerminalArtifact } from "~/components/TerminalArtifact";
+import { pageMeta } from "~/lib/seo";
 
 const AsciiCrt = lazy(() => import("~/components/AsciiCrt"));
 
@@ -23,10 +24,11 @@ function HeroObject() {
 }
 
 export function meta() {
-  return [
-    { title: `${site.name} — ${site.role}` },
-    { name: "description", content: site.intro },
-  ];
+  return pageMeta({
+    title: `${site.name} — ${site.role}`,
+    description: site.intro,
+    path: "/",
+  });
 }
 
 export default function Home() {

@@ -2,14 +2,16 @@ import { Link, useParams } from "react-router";
 import { site } from "~/content/site";
 import { projects, getProject } from "~/content/projects";
 import { Reveal } from "~/components/Reveal";
+import { pageMeta } from "~/lib/seo";
 
 export function meta({ params }: { params: { slug: string } }) {
   const p = getProject(params.slug);
   if (!p) return [{ title: `Not found — ${site.name}` }];
-  return [
-    { title: `${p.title} — ${site.name}` },
-    { name: "description", content: p.oneliner },
-  ];
+  return pageMeta({
+    title: `${p.title} — ${site.name}`,
+    description: p.oneliner,
+    path: `/projects/${p.slug}`,
+  });
 }
 
 const SECTIONS = ["problem", "approach", "outcome"] as const;

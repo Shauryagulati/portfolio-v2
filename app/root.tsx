@@ -15,6 +15,7 @@ import "~/styles/base.css";
 import "~/styles/site.css";
 
 import { themeBootScript } from "~/lib/theme";
+import { personJsonLd } from "~/lib/seo";
 import { Terminal } from "~/terminal/Terminal";
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -25,6 +26,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <link rel="llms" type="text/plain" href="/llms.txt" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: personJsonLd }}
+        />
         <Meta />
         <Links />
       </head>

@@ -2,17 +2,16 @@ import { Link } from "react-router";
 import { site } from "~/content/site";
 import { projects } from "~/content/projects";
 import { Reveal } from "~/components/Reveal";
+import { pageMeta } from "~/lib/seo";
 
 export function meta() {
-  return [
-    { title: `Projects — ${site.name}` },
-    {
-      name: "description",
-      content: `Selected work by ${site.name}: ${projects
-        .map((p) => p.title)
-        .join(", ")}.`,
-    },
-  ];
+  return pageMeta({
+    title: `Projects — ${site.name}`,
+    description: `Selected work by ${site.name}: ${projects
+      .map((p) => p.title)
+      .join(", ")}.`,
+    path: "/projects",
+  });
 }
 
 export default function Projects() {

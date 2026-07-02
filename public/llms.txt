@@ -1,0 +1,84 @@
+# Shaurya Gulati
+
+> AI product builder and data scientist, currently pursuing a Master's at Carnegie Mellon. I design and ship intelligent systems: RAG pipelines, multi-agent applications, and the generative-AI products that put them in people's hands.
+
+Canonical site: https://shauryagulati.dev
+Contact: i.shauryagulati@gmail.com · GitHub: https://github.com/Shauryagulati · LinkedIn: https://www.linkedin.com/in/shauryagulati/
+
+---
+
+# About Shaurya Gulati
+
+I'm Shaurya — an AI product builder and data scientist, currently pursuing a Master's at Carnegie Mellon University.
+My work sits where machine learning meets product: RAG pipelines that cite their sources, multi-agent systems that check their own output, generative tools that people actually use. I care as much about how a system behaves in someone's hands as I do about how it scores on a benchmark.
+Outside the code, I'm drawn to human behavior, storytelling, and systems thinking — the disciplines that explain why some tools feel inevitable and others feel like homework. That lens shapes what I build: products should not just work; they should think, adapt, and earn their place in the workflow.
+This site is a working example. The terminal in the corner is real — and if you type shaurya into it, you'll be talking to an agent that has read everything here.
+---
+
+# EU Navigator
+A multi-agent RAG system for exploring EU tech, data, and AI legislation — with verified citations.
+stack: LangChain, FAISS, Llama 3.1, BGE-M3, RAGAS, Streamlit
+
+## Problem
+EU tech, data, and AI legislation is vast, interlinked, and written for lawyers. Anyone trying to actually learn it — students, builders, policy people — has to hold structure in their head that the documents themselves bury. Generic chatbots make this worse: they answer confidently without citations, and legal text is exactly where hallucination is most expensive.
+
+## Approach
+I built EU Navigator as a personal learning portal backed by a multi-agent RAG pipeline. Specialized agents handle planning, retrieval, synthesis, and review, so every answer is drafted against retrieved legal text and then checked before it reaches the user. The corpus preserves the legislation's native structure through section-based chunking, indexed in FAISS with BGE-M3 embeddings and served by Llama 3.1 through LangChain. A Streamlit interface supports modular exploration, progress tracking, and reflection journaling. Faithfulness and relevancy are measured with RAGAS rather than assumed.
+
+## Outcome
+The result is evidence-based legal analysis with verified citations — a system whose answers can be traced back to the exact section of the exact regulation, evaluated with RAGAS for faithfulness and relevancy. It is also the project that shaped how I think about agent design: separate the roles, verify the output, and never let synthesis outrun retrieval.
+
+repo: https://github.com/Shauryagulati/EU-Navigator
+---
+
+# Air Quality Prediction, End to End
+A complete MLOps pipeline on the UCI air-quality dataset — experiment tracking, streaming ingestion, drift monitoring.
+stack: Python, XGBoost, MLflow, Kafka, Docker, Evidently AI
+
+## Problem
+Most ML course projects end at a notebook with a good metric. Real systems fail after that point — untracked experiments, data that drifts, models that quietly degrade in production with nobody watching.
+
+## Approach
+I built the whole lifecycle for an air-quality prediction model on the UCI dataset: XGBoost models with every experiment tracked in MLflow, real-time data ingestion through Kafka, and a prediction API packaged in Docker. Monitoring dashboards built with Evidently AI watch for data drift and performance degradation, so the system tells you when it is going stale instead of waiting to be caught.
+
+## Outcome
+A reproducible, modular pipeline with continuous evaluation baked in — ingestion, training, serving, and monitoring as one system rather than a notebook and a prayer. The project is my working answer to what 'production ML' means beyond the model file.
+---
+
+# Question Answering with BERT on Azure
+A fine-tuned BERT QA system, benchmarked against classical baselines and deployed for real-time inference on Azure ML.
+stack: Python, BERT, Hugging Face, Azure ML, SQuAD
+
+## Problem
+Matching a user's question to the sentence that actually answers it is deceptively hard: lexical overlap fails on paraphrase, and deep models are easy to demo but hard to serve with acceptable latency.
+
+## Approach
+I fine-tuned a BERT-based question-answering system on SQuAD to match queries against candidate answer sentences, using semantic similarity over sentence embeddings — and benchmarked it honestly against Jaccard and TF-IDF baselines to prove the deep model earned its cost. The model was deployed on Azure Machine Learning with a scoring pipeline optimized for both latency and accuracy.
+
+## Outcome
+Full-stack ML deployment, demonstrated end to end: fine-tuning, packaging, serving, and real-time inference. The baseline comparison discipline — measure the simple thing before shipping the complex one — is a habit I've carried into every system since.
+---
+
+# Resume — Shaurya Gulati
+
+## Education
+- Carnegie Mellon University — Master's degree. Graduate study focused on machine learning systems and AI products.
+
+## Skills
+- AI / ML: RAG systems, Multi-agent applications, LLM evaluation (RAGAS), Fine-tuning (BERT), XGBoost
+- Engineering: Python, LangChain, FAISS, Hugging Face, Docker, Kafka, MLflow, Azure ML, TypeScript / React
+- Practice: Experiment tracking, Model monitoring (Evidently), Data drift detection, Product thinking
+
+PDF: https://shauryagulati.dev/resume.pdf
+---
+
+# Contact
+
+- email: i.shauryagulati@gmail.com
+- linkedin: https://www.linkedin.com/in/shauryagulati/
+- github: https://github.com/Shauryagulati
+
+---
+
+This site has an interactive terminal (press /) with a built-in RAG
+agent — type "shaurya" in it to ask questions about this content.

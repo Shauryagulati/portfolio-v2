@@ -1,15 +1,14 @@
 import { site } from "~/content/site";
 import { resume } from "~/content/resume";
 import { Reveal } from "~/components/Reveal";
+import { pageMeta } from "~/lib/seo";
 
 export function meta() {
-  return [
-    { title: `Resume — ${site.name}` },
-    {
-      name: "description",
-      content: `Resume of ${site.name} — ${site.role}, ${site.school}.`,
-    },
-  ];
+  return pageMeta({
+    title: `Resume — ${site.name}`,
+    description: `Resume of ${site.name} — ${site.role}, ${site.school}.`,
+    path: "/resume",
+  });
 }
 
 export default function Resume() {
