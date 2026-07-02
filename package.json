@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@fontsource-variable/newsreader": "^5.2.10",
+    "@fontsource/commit-mono": "^5.2.5",
     "@react-router/node": "^8.1.0",
     "isbot": "^5.1.44",
     "react": "^19.2.7",

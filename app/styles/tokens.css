@@ -1,0 +1,72 @@
+/* ————————————————————————————————————————————————
+   Design tokens — two worlds, one system.
+   Light: "Paper & Ink"        warm paper, near-black ink
+   Dark:  "Graphite & Phosphor" true black, grey scale, phosphor
+   The terminal is black in BOTH themes.
+   One accent. No gradients, no glow, no glass.
+   ———————————————————————————————————————————————— */
+
+:root {
+  /* fonts */
+  --font-serif: "Newsreader Variable", "Iowan Old Style", Georgia, serif;
+  --font-mono: "Commit Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* type scale (fluid) */
+  --text-xs: 0.72rem;
+  --text-sm: 0.84rem;
+  --text-base: 1rem;
+  --text-md: 1.18rem;
+  --text-lg: clamp(1.35rem, 1.1rem + 1.2vw, 1.75rem);
+  --text-xl: clamp(1.9rem, 1.4rem + 2.4vw, 3rem);
+  --text-hero: clamp(2.6rem, 1.8rem + 4.4vw, 5rem);
+
+  /* rhythm */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.75rem;
+  --space-5: 3rem;
+  --space-6: 5rem;
+  --space-7: 8rem;
+  --measure: 62ch;
+  --page-max: 72rem;
+  --page-pad: clamp(1.25rem, 4vw, 3rem);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur: 240ms;
+  --dur-slow: 420ms;
+
+  /* the terminal — same in both themes, always the black artifact */
+  --term-bg: #0d0d0b;
+  --term-ink: #e8e6e1;
+  --term-dim: #77736b;
+  --term-line: #26261f;
+  --term-accent: #34d76f;
+}
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #faf8f4;
+  --bg-2: #f2efe8;
+  --ink: #131311;
+  --ink-2: #56524a;
+  --ink-3: #8b867c;
+  --line: #e6e1d6;
+  --accent: #0e6b3f;
+  --selection: #e3ddcf;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c0c0c;
+  --bg-2: #121211;
+  --ink: #ecebe7;
+  --ink-2: #a5a29a;
+  --ink-3: #6f6c65;
+  --line: #232320;
+  --accent: #33ff66;
+  --selection: #1e2b20;
+}

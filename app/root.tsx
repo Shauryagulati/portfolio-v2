@@ -6,12 +6,22 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import "@fontsource/commit-mono/400.css";
+import "@fontsource/commit-mono/700.css";
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/newsreader/opsz-italic.css";
+import "~/styles/tokens.css";
+import "~/styles/base.css";
+
+import { themeBootScript } from "~/lib/theme";
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <Meta />
         <Links />
       </head>
