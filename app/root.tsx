@@ -15,6 +15,7 @@ import "~/styles/base.css";
 import "~/styles/site.css";
 
 import { themeBootScript } from "~/lib/theme";
+import { Terminal } from "~/terminal/Terminal";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   // suppressHydrationWarning: data-theme is set pre-hydration by the boot script
@@ -37,5 +38,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <Terminal />
+    </>
+  );
 }
