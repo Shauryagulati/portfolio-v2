@@ -454,21 +454,20 @@ li:last-child .work-row {
 
 /* ————— the live terminal ————— */
 
-.term-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: rgb(10 10 8 / 0.42);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: var(--space-4);
-}
-
+/* a floating, non-modal OS window: drag by the bar, resize from the
+   corner, browse the page underneath */
 .term-window {
-  width: min(46rem, 100%);
-  height: min(30rem, 78dvh);
-  margin-bottom: 4vh;
+  position: fixed;
+  z-index: 60;
+  left: max(2vw, calc(50vw - 23rem));
+  top: 12dvh;
+  width: min(46rem, 96vw);
+  height: min(30rem, 74dvh);
+  min-width: 20rem;
+  min-height: 13rem;
+  max-width: 96vw;
+  max-height: 86dvh;
+  resize: both;
   background: var(--term-bg);
   border: 1px solid var(--term-line);
   border-radius: 12px;
@@ -485,6 +484,24 @@ li:last-child .work-row {
   gap: var(--space-3);
   padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--term-line);
+  cursor: grab;
+  user-select: none;
+}
+
+.term-window-bar:active {
+  cursor: grabbing;
+}
+
+/* native resize handle, restated in our voice */
+.term-window::before {
+  content: "◢";
+  position: absolute;
+  right: 5px;
+  bottom: 2px;
+  font-size: 9px;
+  color: var(--term-dim);
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 .term-window-title {
@@ -559,17 +576,24 @@ li:last-child .work-row {
 }
 
 @media (max-width: 640px) {
-  .term-backdrop {
-    padding: 0;
-    align-items: stretch;
-  }
-
   .term-window {
-    width: 100%;
+    left: 0;
+    top: 0;
+    width: 100vw;
     height: 100dvh;
-    margin: 0;
+    max-width: none;
+    max-height: none;
     border-radius: 0;
     border: none;
+    resize: none;
+  }
+
+  .term-window::before {
+    content: none;
+  }
+
+  .term-window-bar {
+    cursor: default;
   }
 }
 

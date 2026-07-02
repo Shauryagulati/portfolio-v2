@@ -1,0 +1,18 @@
+import { chromium } from "playwright";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+await page.addInitScript(() => localStorage.setItem("theme", "dark"));
+await page.goto("http://localhost:5200/", { waitUntil: "networkidle" });
+await page.keyboard.press("/");
+await page.waitForSelector(".term-window");
+await page.fill(".term-input", "neofetch");
+await page.keyboard.press("Enter");
+const bar = await page.locator(".term-window-bar").boundingBox();
+await page.mouse.move(bar.x + 200, bar.y + 15);
+await page.mouse.down();
+await page.mouse.move(bar.x + 480, bar.y + 180, { steps: 6 });
+await page.mouse.up();
+await page.waitForTimeout(1200);
+await page.screenshot({ path: process.argv[2] });
+await browser.close();
+console.log("ok");
