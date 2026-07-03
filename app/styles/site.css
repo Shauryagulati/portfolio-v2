@@ -614,6 +614,17 @@ li:last-child .work-row {
   color: var(--term-dim);
 }
 
+/* terminal-native markdown: # bold bright, ## phosphor */
+.term-line.term-h1 {
+  color: var(--term-ink);
+  font-weight: 700;
+}
+
+.term-line.term-h2 {
+  color: var(--term-accent);
+  margin-top: 0.35em;
+}
+
 .term-input-row {
   display: flex;
   gap: 0.6em;

@@ -4,8 +4,18 @@ import { cwdString, listDir, normalize, resolve } from "./vfs";
 
 export interface Line {
   id: number;
-  kind: "in" | "out" | "dim" | "ok" | "err";
+  kind: "in" | "out" | "dim" | "ok" | "err" | "h1" | "h2";
   text: string;
+}
+
+/** Render a corpus doc with terminal-native markdown: # and ## become
+ *  styled lines instead of literal hashes. */
+function printDoc(ctx: ShellCtx, text: string) {
+  for (const line of text.split("\n")) {
+    if (line.startsWith("## ")) ctx.print("h2", line.slice(3));
+    else if (line.startsWith("# ")) ctx.print("h1", line.slice(2));
+    else ctx.print("out", line);
+  }
 }
 
 export interface ShellCtx {
@@ -70,7 +80,7 @@ export const commands: Record<string, Command> = {
       if (!node) return ctx.print("err", `cat: no such file: ${args[0]}`);
       if (node.kind !== "file")
         return ctx.print("err", `cat: ${args[0]} is a directory`);
-      ctx.print("out", ...node.doc.text.split("\n"));
+      printDoc(ctx, node.doc.text);
     },
   },
   pwd: {
@@ -90,13 +100,18 @@ export const commands: Record<string, Command> = {
         return;
       }
       if (node.doc.path === "~/contact.md") {
-        ctx.print("out", ...node.doc.text.split("\n"));
+        printDoc(ctx, node.doc.text);
         ctx.print("ok", "▸ opening your mail app");
         window.location.href = `mailto:${site.email}`;
         return;
       }
       const route = routeFor(node.doc.path);
-      if (!route) return ctx.print("err", `open: no page for ${args[0]}`);
+      if (!route) {
+        // no page for this file — show it right here instead of erroring
+        ctx.print("dim", `(no page for ${args[0]}; showing it here)`);
+        printDoc(ctx, node.doc.text);
+        return;
+      }
       ctx.print("ok", `▸ opening ${route} (tip: cat ${args[0]} reads it here)`);
       ctx.navigate(route);
       ctx.close();
