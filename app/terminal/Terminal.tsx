@@ -24,7 +24,7 @@ export function Terminal() {
   const [bounds, setBounds] = useState({ top: 0, bottom: 0, left: 0, right: 0 });
 
   useEffect(() => {
-    const mq = matchMedia("(max-width: 640px)");
+    const mq = matchMedia("(max-width: 640px) and (hover: none)");
     const sync = () => {
       setMobile(mq.matches);
       const vh = window.innerHeight;

@@ -33,9 +33,6 @@ type Pages = {
   "/about": {
     params: {};
   };
-  "/resume": {
-    params: {};
-  };
   "/*": {
     params: {
       "*": string;
@@ -46,11 +43,11 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/projects" | "/projects/:slug" | "/writing" | "/writing/:slug" | "/about" | "/resume" | "/*";
+    page: "/" | "/projects" | "/projects/:slug" | "/writing" | "/writing/:slug" | "/about" | "/*";
   };
   "routes/layout.tsx": {
     id: "routes/layout";
-    page: "/" | "/projects" | "/projects/:slug" | "/writing" | "/writing/:slug" | "/about" | "/resume" | "/*";
+    page: "/" | "/projects" | "/projects/:slug" | "/writing" | "/writing/:slug" | "/about" | "/*";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -76,10 +73,6 @@ type RouteFiles = {
     id: "routes/about";
     page: "/about";
   };
-  "routes/resume.tsx": {
-    id: "routes/resume";
-    page: "/resume";
-  };
   "routes/not-found.tsx": {
     id: "routes/not-found";
     page: "/*";
@@ -95,6 +88,5 @@ type RouteModules = {
   "routes/writing": typeof import("./app/routes/writing.tsx");
   "routes/post": typeof import("./app/routes/post.tsx");
   "routes/about": typeof import("./app/routes/about.tsx");
-  "routes/resume": typeof import("./app/routes/resume.tsx");
   "routes/not-found": typeof import("./app/routes/not-found.tsx");
 };

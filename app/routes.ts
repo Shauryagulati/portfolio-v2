@@ -13,7 +13,6 @@ export default [
     route("writing", "routes/writing.tsx"),
     route("writing/:slug", "routes/post.tsx"),
     route("about", "routes/about.tsx"),
-    route("resume", "routes/resume.tsx"),
     route("*", "routes/not-found.tsx"),
   ]),
 ] satisfies RouteConfig;

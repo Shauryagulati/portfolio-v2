@@ -60,6 +60,12 @@ export const resume = {
       ],
     },
   ],
+  publications: [
+    "Enhancing Sentiment Analysis in Short Texts with POS-Embedded LSTM Models",
+    "Paint/Writing Application through Webcam using MediaPipe and OpenCV",
+    "Virtual Assistant with Sentiment Analysis",
+    "Can Artificial Intelligence Work Wonders in Healthcare?",
+  ],
   skills: {
     "AI / LLM": [
       "Agents",

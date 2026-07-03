@@ -30,6 +30,9 @@ export function Nav() {
             {item.label}
           </NavLink>
         ))}
+        <a className="mono nav-link" href="/resume.pdf" download>
+          Resume ↓
+        </a>
         <button
           className="mono nav-link nav-term"
           onClick={openTerminal}

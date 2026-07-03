@@ -29,7 +29,6 @@ const paths = [
   "/projects",
   ...projects.map((p) => `/projects/${p.slug}`),
   "/about",
-  "/resume",
 ];
 const today = new Date().toISOString().slice(0, 10);
 const sitemap = [

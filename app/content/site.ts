@@ -18,7 +18,6 @@ export const site = {
   nav: [
     { label: "Projects", to: "/projects" },
     { label: "About", to: "/about" },
-    { label: "Resume", to: "/resume" },
   ],
   terminalHint: "type shaurya to talk to my agent",
 } as const;

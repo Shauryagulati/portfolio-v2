@@ -52,6 +52,9 @@ export const corpus: Doc[] = [
         (e) => `- ${e.school}: ${e.credential}. ${e.detail}`,
       ),
       ``,
+      `## Publications`,
+      ...resume.publications.map((p) => `- ${p}`),
+      ``,
       `## Skills`,
       ...Object.entries(resume.skills).map(
         ([group, items]) => `- ${group}: ${items.join(", ")}`,

@@ -26,7 +26,6 @@ function routeFor(path: string): string | null {
   const m = path.match(/^~\/projects\/(.+)\.md$/);
   if (m) return `/projects/${m[1]}`;
   if (path === "~/about.md") return "/about";
-  if (path === "~/resume.md") return "/resume";
   return null;
 }
 
@@ -79,17 +78,59 @@ export const commands: Record<string, Command> = {
     run: (ctx) => ctx.print("out", cwdString(ctx.cwd)),
   },
   open: {
-    help: "open a file as a page",
+    help: "open a file's page (cat reads the raw file)",
     run: (ctx, args) => {
       if (!args[0]) return ctx.print("err", "open: which file?");
       const node = resolve(ctx.cwd, args[0]);
       if (!node || node.kind !== "file")
         return ctx.print("err", `open: no such file: ${args[0]}`);
+      if (node.doc.path === "~/resume.md") {
+        ctx.print("ok", "▸ downloading resume.pdf");
+        window.open("/resume.pdf", "_blank");
+        return;
+      }
+      if (node.doc.path === "~/contact.md") {
+        ctx.print("out", ...node.doc.text.split("\n"));
+        ctx.print("ok", "▸ opening your mail app");
+        window.location.href = `mailto:${site.email}`;
+        return;
+      }
       const route = routeFor(node.doc.path);
       if (!route) return ctx.print("err", `open: no page for ${args[0]}`);
-      ctx.print("ok", `▸ opening ${route}`);
+      ctx.print("ok", `▸ opening ${route} (tip: cat ${args[0]} reads it here)`);
       ctx.navigate(route);
       ctx.close();
+    },
+  },
+  contact: {
+    help: "how to reach him",
+    run: (ctx) =>
+      ctx.print(
+        "out",
+        `email:    ${site.email}`,
+        `linkedin: ${site.linkedin}`,
+        `github:   ${site.github}`,
+      ),
+  },
+  resume: {
+    help: "download the resume pdf",
+    run: (ctx) => {
+      ctx.print("ok", "▸ downloading resume.pdf");
+      window.open("/resume.pdf", "_blank");
+    },
+  },
+  github: {
+    help: "open his github",
+    run: (ctx) => {
+      ctx.print("ok", `▸ ${site.github}`);
+      window.open(site.github, "_blank", "noopener");
+    },
+  },
+  linkedin: {
+    help: "open his linkedin",
+    run: (ctx) => {
+      ctx.print("ok", `▸ ${site.linkedin}`);
+      window.open(site.linkedin, "_blank", "noopener");
     },
   },
   theme: {

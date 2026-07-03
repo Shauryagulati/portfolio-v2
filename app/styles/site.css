@@ -382,6 +382,58 @@ li:last-child .work-row {
   color: var(--ink-3);
 }
 
+/* ————— the record (about page) ————— */
+
+.record {
+  margin-top: var(--space-6);
+}
+
+.record-label {
+  margin-bottom: var(--space-3);
+}
+
+.record-org {
+  font-size: var(--text-md);
+  font-weight: 500;
+}
+
+.record-meta {
+  text-transform: none;
+  letter-spacing: 0.04em;
+  margin-top: var(--space-1);
+  color: var(--ink-3);
+}
+
+.record-points {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: var(--text-base);
+}
+
+.record-points li + li {
+  margin-top: 0.4em;
+}
+
+.record-pubs {
+  list-style: none;
+  padding: 0;
+}
+
+.record-pubs li {
+  border-top: 1px solid var(--line);
+  padding-block: var(--space-2);
+}
+
+.record-download {
+  display: inline-block;
+  margin-top: var(--space-5);
+  color: var(--ink-2);
+}
+
+.record-download:hover {
+  color: var(--accent);
+}
+
 /* ————— resume ————— */
 
 .resume-head {
@@ -579,7 +631,9 @@ li:last-child .work-row {
   padding: 0;
 }
 
-@media (max-width: 640px) {
+/* full-screen sheet ONLY on true touch devices — a narrow desktop
+   window keeps the floating terminal */
+@media (max-width: 640px) and (hover: none) {
   .term-window {
     left: 0;
     top: 0;

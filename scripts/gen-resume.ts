@@ -62,6 +62,9 @@ ${projects
 <div class="row"><span><span class="org">This site</span> — a terminal with a built-in RAG agent over my work, running at $0/month.</span></div>
 <div class="detail">${esc(site.url.replace("https://", ""))} — type "shaurya" in its terminal.</div>
 
+<h2>Publications</h2>
+<ul>${resume.publications.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
+
 <h2>Skills</h2>
 <div class="skills">
 ${Object.entries(resume.skills)
