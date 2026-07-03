@@ -18,7 +18,7 @@ export function Footer() {
           </a>
         </nav>
       </div>
-      <p className="mono footer-hint">{site.terminalHint} — or press /</p>
+      <p className="mono footer-hint">{site.terminalHint} · or press /</p>
     </footer>
   );
 }

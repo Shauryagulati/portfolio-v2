@@ -127,7 +127,7 @@ export const commands: Record<string, Command> = {
     run: (ctx) =>
       ctx.print(
         "out",
-        `built by ${site.name} — design + code in the open.`,
+        `built by ${site.name}. design + code in the open.`,
         "v1 of this site was a retro-computer built on Edward Hinrichsen's",
         "open-source work (MIT). v2 is a from-scratch rebuild; the CRT in",
         "the hero is a tip of the hat, drawn in text this time.",
@@ -135,7 +135,7 @@ export const commands: Record<string, Command> = {
   },
   whoami: {
     help: "who are you",
-    run: (ctx) => ctx.print("out", "guest — but the agent knows the owner. type: " + site.handle),
+    run: (ctx) => ctx.print("out", "guest. but the agent knows the owner. type: " + site.handle),
   },
   clear: {
     help: "clear the screen",

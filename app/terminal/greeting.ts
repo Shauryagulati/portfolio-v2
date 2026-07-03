@@ -40,7 +40,7 @@ export function trafficSource(): string | null {
 
 export function bootLines(handle: string): string[] {
   const src = trafficSource();
-  const via = src ? ` — via ${src}` : "";
+  const via = src ? ` (via ${src})` : "";
   const now = new Date().toLocaleString("en-US", {
     weekday: "short",
     month: "short",

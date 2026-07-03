@@ -18,9 +18,9 @@ async function type(cmd, wait = 400) {
 }
 
 await type("shaurya", 600);
-await type("what is eu navigator?", 4000);
+await type("tell me about suture", 4000);
 await type("how do I contact him?", 4000);
-await type("what's his stack?", 4000);
+await type("what did he do at lunon?", 4000);
 await type("exit", 400);
 await type("pwd", 300);
 
@@ -30,8 +30,8 @@ await browser.close();
 
 const checks = [
   ["agent boots", /RAG over everything/i.test(text)],
-  ["eu-navigator answer", /(multi-agent|legislation|citations)/i.test(text)],
-  ["eu-navigator cited", /— from ~\/projects\/eu-navigator\.md/.test(text)],
+  ["suture answer", /(cardiology|prior-auth|referral|PHI)/i.test(text)],
+  ["suture cited", /src: ~\/projects\/suture\.md/.test(text)],
   ["contact answer", /i\.shauryagulati@gmail\.com/i.test(text)],
   ["exit returns to shell", /agent detached/.test(text)],
   ["shell works after exit", /\n~\s*$|~ % pwd/m.test(text)],

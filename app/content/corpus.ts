@@ -45,11 +45,11 @@ export const corpus: Doc[] = [
     path: "~/resume.md",
     title: "Resume",
     text: [
-      `# Resume — ${site.name}`,
+      `# Resume: ${site.name}`,
       ``,
       `## Education`,
       ...resume.education.map(
-        (e) => `- ${e.school} — ${e.credential}. ${e.detail}`,
+        (e) => `- ${e.school}: ${e.credential}. ${e.detail}`,
       ),
       ``,
       `## Skills`,

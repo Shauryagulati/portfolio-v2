@@ -96,10 +96,10 @@ export function Terminal() {
           dragMomentum={false}
           dragElastic={0}
           dragConstraints={bounds}
-          initial={reduced ? false : { opacity: 0, y: 26, scale: 0.985 }}
+          initial={reduced ? false : { opacity: 0, y: 48, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0 }} // fade in place — the window may be dragged anywhere
-          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+          exit={{ opacity: 0, transition: { duration: 0.16 } }} // fade in place; window may be dragged anywhere
+          transition={{ type: "spring", stiffness: 240, damping: 26, mass: 0.9 }}
           onClick={() => {
             if (window.getSelection()?.toString()) return;
             inputRef.current?.focus();

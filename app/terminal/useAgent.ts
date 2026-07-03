@@ -4,7 +4,7 @@ import { localAnswer, remoteAnswer } from "./agent";
 import type { useShell } from "./useShell";
 
 const INTRO = [
-  `${site.handle}-agent v1 — RAG over everything on this site.`,
+  `${site.handle}-agent v1 · RAG over everything on this site.`,
   `ask about projects, stack, education, contact. type exit to leave.`,
 ];
 
@@ -30,7 +30,7 @@ export function useAgent(shell: ReturnType<typeof useShell>) {
         return;
       }
       if (busy.current) {
-        sh.print("dim", "(still answering — give me a second, then re-ask)");
+        sh.print("dim", "(still answering. give me a second, then re-ask)");
         return;
       }
       busy.current = true;
@@ -47,7 +47,7 @@ export function useAgent(shell: ReturnType<typeof useShell>) {
         sh.appendToLast(text.slice(i, i + 3));
         await new Promise((r) => setTimeout(r, 12));
       }
-      if (answer.source) sh.print("dim", `— from ${answer.source}`);
+      if (answer.source) sh.print("dim", `src: ${answer.source}`);
       busy.current = false;
     };
     return () => {

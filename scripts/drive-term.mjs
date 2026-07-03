@@ -21,7 +21,7 @@ await type("help");
 await type("ls");
 await type("cd projects");
 await type("ls");
-await type("cat eu-navigator.md");
+await type("cat suture.md");
 await type("pwd");
 await type("cd ..");
 await type("neofetch");
@@ -34,7 +34,7 @@ const checks = [
   ["boot greeting", /last login/.test(text)],
   ["help lists cat", /cat\s+print a file/.test(text)],
   ["ls shows projects dir", /projects\//.test(text)],
-  ["cat prints case study", /multi-agent RAG/i.test(text)],
+  ["cat prints case study", /cardiology practice/i.test(text)],
   ["pwd tracks cd", /~\/projects/.test(text)],
   ["neofetch", /shaurya-os v2/.test(text)],
 ];

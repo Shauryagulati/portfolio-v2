@@ -19,7 +19,7 @@ const llms = [
   `---`,
   ``,
   `This site has an interactive terminal (press /) with a built-in RAG`,
-  `agent — type "${site.handle}" in it to ask questions about this content.`,
+  `agent. Type "${site.handle}" in it to ask questions about this content.`,
 ].join("\n");
 writeFileSync("public/llms.txt", llms);
 
