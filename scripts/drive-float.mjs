@@ -1,17 +1,27 @@
 // Drive the floating terminal window: node scripts/drive-float.mjs <url> <out>
 import { chromium } from "playwright";
 
-const [url, out] = process.argv.slice(2);
+const [url, out, theme = "dark"] = process.argv.slice(2);
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 const errors = [];
 page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
+// dark by default: a dark-only CSS override once broke the window position
+await page.addInitScript((t) => localStorage.setItem("theme", t), theme);
 await page.goto(url, { waitUntil: "networkidle" });
 
-// 1. launcher opens the window
+// 1. launcher opens the window — floating (fixed, upper half), never bottom
 await page.click(".term-artifact");
 await page.waitForSelector(".term-window");
-const opened = (await page.locator(".term-window").count()) === 1;
+await page.waitForTimeout(600);
+const winBox = await page.locator(".term-window").boundingBox();
+const winPos = await page
+  .locator(".term-window")
+  .evaluate((el) => getComputedStyle(el).position);
+const opened =
+  (await page.locator(".term-window").count()) === 1 &&
+  winPos === "fixed" &&
+  winBox.y < 300;
 
 // 2. commands execute in the window
 await page.fill(".term-input", "ls");

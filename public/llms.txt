@@ -12,7 +12,6 @@ Contact: i.shauryagulati@gmail.com · GitHub: https://github.com/Shauryagulati �
 I'm Shaurya, an AI engineer working on agents, retrieval, and the unglamorous machinery that makes them trustworthy: evals, citations, observability, and the failure paths nobody designs until production forces them to.
 I finished my Master's at Carnegie Mellon (Information Systems Management, Business Intelligence & Data Analytics, Dec '25). While there I built hybrid RAG systems over regulatory text as a research assistant and TA'd the graduate course on operationalizing AI. From there I went straight into the deep end as Founding AI Engineer at Lunon, an AI-native company automating commercial due diligence for private equity. I built the multi-agent pipeline with its quality gates, a 20-tool analyst copilot, and the observability to know what all of it was doing.
 The through-line in my work is verification. Retrieval systems that cite the page they decided from. Extraction pipelines with per-field precision tracked across prompt changes. An open-source framework, rag-verdict, that tests what agents do instead of averaging how their answers score. Systems that think are only useful if you can check their work.
-Before the AI years I was a software engineer at YMGrad, and a sentiment-analysis and computer-vision researcher during undergrad with a few published papers to show for it. Two patterns have held the whole way. First, I build tools for problems I actually have: Eyeline exists because I kept breaking eye contact reading scripts on camera, and rag-verdict exists because I got tired of trusting eval scores I couldn't act on. Second, I treat presentation as part of the engineering. A commit history should read like a changelog, a README should sell the idea in ten seconds, and a portfolio should prove its claims instead of listing them. I've also never stopped teaching: TA at CMU, guest lectures, and a habit of writing down what broke so the next person skips the bruise.
 This site is a working example of all of it. The terminal is real. Type shaurya into it and you're talking to an agent that has read everything here, cites its sources, and was designed to fail gracefully. That's the job, in miniature.
 ---
 
@@ -120,6 +119,65 @@ I fine-tuned a BERT-based question-answering system on SQuAD to match queries ag
 
 ## Outcome
 Full-stack ML deployment, demonstrated end to end: fine-tuning, packaging, serving, and real-time inference. The baseline-comparison discipline, measure the simple thing before shipping the complex one, is a habit I've carried into every system since.
+---
+
+# Lunon
+Founding AI Engineer · Feb 2026 – May 2026
+
+- Built the 5-phase core AI pipeline for automated commercial due diligence (private equity): a multi-agent system with quality gates and automated correction loops.
+- Built the retrieval stack: document ingestion, hybrid search (pgvector + lexical with RRF fusion), query decomposition, and cross-encoder reranking.
+- Built the analyst copilot: a ~20-tool agent with streaming chat, a propose-then-confirm flow for edits, and citation verification against the source corpus.
+- Traced and fixed a quality-gate failure loop blocking a client demo; added warn-mode so runs completed instead of stalling.
+- Set up Langfuse observability for tracing and cost/latency monitoring across the agent pipeline.
+---
+
+# Carnegie Mellon University
+AI Research Assistant · Jun 2025 – Dec 2025
+
+- Engineered a hybrid RAG system across 1,000+ regulatory documents: dense retrieval (E5 embeddings, ChromaDB) fused with sparse BM25, re-ranked with a BGE cross-encoder.
+- Built a PDF ingestion pipeline with page parsing, header detection, and overlapping chunking, with data-lineage tracking for accurate vector-store population.
+- Evaluated across 50+ query sets: 94% accuracy with grounded citations.
+---
+
+# Carnegie Mellon University, Heinz College
+Graduate Teaching Assistant, Fundamentals of Operationalizing AI · Aug 2025 – Oct 2025
+
+- Ran recitations and Q&A on deploying and scaling AI systems in practice; guided students through implementation challenges and graded coursework.
+---
+
+# YMGrad
+Software Development Engineer · Jun 2022 – Jul 2024
+
+- Built analytics APIs and optimized Redis caching and MySQL indexing, cutting load times ~25% and query time ~30%.
+- Automated operational reporting workflows, reducing manual support overhead ~15%.
+---
+
+# Education
+
+## Carnegie Mellon University
+Master's in Information Systems Management, Business Intelligence & Data Analytics (Aug 2024 – Dec 2025)
+Coursework: Computational Data Science, Machine Learning, Applications of NLP and LLMs, Distributed Systems, Applied AI.
+
+## Chandigarh University
+B.E. Computer Science, specialization in Artificial Intelligence & Machine Learning (2018 – 2022)
+Undergraduate researcher in sentiment analysis and computer vision; published at international conferences.
+
+---
+
+# Publications
+
+- Enhancing Sentiment Analysis in Short Texts with POS-Embedded LSTM Models
+- Paint/Writing Application through Webcam using MediaPipe and OpenCV
+- Virtual Assistant with Sentiment Analysis
+- Can Artificial Intelligence Work Wonders in Healthcare?
+---
+
+# Skills
+
+- AI / LLM: Agents, RAG, Claude Agent SDK, OpenAI API, LangChain, MCP, LLM-as-judge, Evals, Prompt engineering & caching
+- Retrieval: pgvector, FAISS, Hybrid search, BM25, RRF fusion, BGE cross-encoder reranking, Query decomposition
+- Backend: Python, FastAPI, PostgreSQL, Redis, SQLAlchemy, Alembic, asyncio, SSE streaming, SQL / MySQL
+- Observability / Infra: Langfuse, OpenTelemetry, Docker, GitHub Actions, Git
 ---
 
 # Resume: Shaurya Gulati

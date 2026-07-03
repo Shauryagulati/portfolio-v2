@@ -708,8 +708,11 @@ li:last-child .work-row {
   );
 }
 
-[data-theme="dark"] .term-artifact,
-[data-theme="dark"] .term-window {
+/* the artifact needs a positioned box for its ::after scanlines;
+   .term-window is already position:fixed — NEVER override it here
+   (a `position: relative` on it once sent the window to the page
+   bottom in dark mode only) */
+[data-theme="dark"] .term-artifact {
   position: relative;
 }
 

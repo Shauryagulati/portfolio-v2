@@ -34,6 +34,27 @@ function projectDoc(p: (typeof projects)[number]): Doc {
   };
 }
 
+/** One file per role, VS-Code-explorer style: `ls ~/experience` tells
+ *  the story by itself. */
+function roleDoc(x: (typeof resume.experience)[number]): Doc {
+  const slug = x.org
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+    .replace(/carnegie-mellon-university.*/, "cmu")
+    .concat(x.role.toLowerCase().includes("teaching") ? "-ta" : "");
+  return {
+    path: `~/experience/${slug}.md`,
+    title: `${x.role} at ${x.org}`,
+    text: [
+      `# ${x.org}`,
+      `${x.role} · ${x.dates}`,
+      ``,
+      ...x.points.map((p) => `- ${p}`),
+    ].join("\n"),
+  };
+}
+
 export const corpus: Doc[] = [
   {
     path: "~/about.md",
@@ -41,6 +62,39 @@ export const corpus: Doc[] = [
     text: [`# About Shaurya Gulati`, ``, ...about.body].join("\n"),
   },
   ...projects.map(projectDoc),
+  ...resume.experience.map(roleDoc),
+  {
+    path: "~/education.md",
+    title: "Education",
+    text: [
+      `# Education`,
+      ``,
+      ...resume.education.flatMap((e) => [
+        `## ${e.school}`,
+        e.credential,
+        e.detail,
+        ``,
+      ]),
+    ].join("\n"),
+  },
+  {
+    path: "~/publications.md",
+    title: "Publications",
+    text: [`# Publications`, ``, ...resume.publications.map((p) => `- ${p}`)].join(
+      "\n",
+    ),
+  },
+  {
+    path: "~/skills.md",
+    title: "Skills",
+    text: [
+      `# Skills`,
+      ``,
+      ...Object.entries(resume.skills).map(
+        ([group, items]) => `- ${group}: ${items.join(", ")}`,
+      ),
+    ].join("\n"),
+  },
   {
     path: "~/resume.md",
     title: "Resume",
