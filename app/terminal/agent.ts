@@ -1,4 +1,6 @@
 import { site } from "~/content/site";
+import { resume } from "~/content/resume";
+import { getDoc } from "~/content/corpus";
 import { topDocs, topSentences } from "./retrieve";
 
 export interface AgentAnswer {
@@ -18,11 +20,52 @@ export function localAnswer(query: string): AgentAnswer {
       source: null,
     };
   }
+  // conversational follow-ups: the offline brain has no memory, say so
+  // gracefully instead of shrugging
+  // openers like "why"/"how" stay OUT of this list: they begin real
+  // questions ("how do I contact him?") and must reach retrieval
+  if (
+    q.length < 26 &&
+    /^(are you sure|really\??$|ok(ay)?\??$|thanks?|thank you|cool|nice|lol|wow)/.test(
+      q,
+    )
+  ) {
+    return {
+      text: `fair question. I'm running in offline mode right now (no LLM, just retrieval over the site), so I answer each question fresh and can't follow a thread. everything I say comes straight from the files here; cat the source I cite and check me.`,
+      source: null,
+    };
+  }
   if (/(contact|email|reach|hire|linkedin)/.test(q)) {
     return {
-      text: `email ${site.email}, or LinkedIn — both listed here.`,
+      text: `email ${site.email}, or LinkedIn. both listed here.`,
       source: "~/contact.md",
     };
+  }
+  if (/(stack|skills?|technolog|tools|languages|frameworks)/.test(q)) {
+    const skills = Object.entries(resume.skills)
+      .map(([g, items]) => `${g.toLowerCase()}: ${items.slice(0, 5).join(", ")}`)
+      .join(". ");
+    return { text: skills + ".", source: "~/skills.md" };
+  }
+  if (/(experience|\bwork(ed|s)?\b|jobs?|roles?|career|employ)/.test(q) && q.length < 40) {
+    const roles = resume.experience
+      .map((x) => `${x.role} at ${x.org} (${x.dates})`)
+      .join("; ");
+    return {
+      text: `${roles}. run: ls ~/experience for the file on each.`,
+      source: "~/experience",
+    };
+  }
+  if (/(education|degree|study|studied|university|college|cmu|carnegie)/.test(q) && q.length < 44) {
+    const doc = getDoc("~/education.md");
+    if (doc) {
+      return {
+        text: resume.education
+          .map((e) => `${e.school}: ${e.credential}`)
+          .join(". "),
+        source: "~/education.md",
+      };
+    }
   }
   // only the literal "who is he / about him" — a bare `about` substring
   // hijacked questions like "tell me about eu navigator"
