@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { site } from "~/content/site";
-import { localAnswer, remoteAnswer } from "./agent";
+import { localAnswer, remoteAnswer, type AgentTurn } from "./agent";
 import type { useShell } from "./useShell";
 
 const INTRO = [
@@ -13,6 +13,8 @@ const INTRO = [
  *  character-by-character; the CRT spins while thinking. */
 export function useAgent(shell: ReturnType<typeof useShell>) {
   const busy = useRef(false);
+  // short-term memory: follow-ups ("are you sure?") need the thread
+  const turns = useRef<AgentTurn[]>([]);
   // keep latest shell fns without re-registering the handler
   const shellRef = useRef(shell);
   shellRef.current = shell;
@@ -37,7 +39,13 @@ export function useAgent(shell: ReturnType<typeof useShell>) {
       window.dispatchEvent(new CustomEvent("agent:thinking"));
       sh.print("dim", "▸ thinking…");
 
-      const answer = (await remoteAnswer(input)) ?? localAnswer(input);
+      const answer =
+        (await remoteAnswer(input, turns.current)) ?? localAnswer(input);
+      turns.current.push(
+        { role: "user", content: input },
+        { role: "assistant", content: answer.text.slice(0, 500) },
+      );
+      if (turns.current.length > 8) turns.current.splice(0, 2);
 
       window.dispatchEvent(new CustomEvent("agent:idle"));
       sh.print("ok", "");

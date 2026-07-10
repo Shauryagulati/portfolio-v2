@@ -97,16 +97,23 @@ export function localAnswer(query: string): AgentAnswer {
   return { text, source: best.path };
 }
 
-/** Ask the deployed Pages Function; null means use the fallback. */
+export interface AgentTurn {
+  role: "user" | "assistant";
+  content: string;
+}
+
+/** Ask the deployed Pages Function; null means use the fallback.
+ *  `history` gives the model short-term memory for follow-ups. */
 export async function remoteAnswer(
   query: string,
-  timeoutMs = 9000,
+  history: AgentTurn[] = [],
+  timeoutMs = 12000,
 ): Promise<AgentAnswer | null> {
   try {
     const res = await fetch("/api/agent", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ q: query.slice(0, 300) }),
+      body: JSON.stringify({ q: query.slice(0, 300), h: history.slice(-8) }),
       signal: AbortSignal.timeout(timeoutMs),
     });
     if (!res.ok) return null;
