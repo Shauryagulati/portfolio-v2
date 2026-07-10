@@ -9,7 +9,7 @@ export default {
     "/projects",
     ...projects.map((p) => `/projects/${p.slug}`),
     "/writing", // always prerendered — direct loads must never hit 404.html
-    ...posts.map((p) => `/writing/${p.slug}`),
+    ...posts.filter((p) => p.body).map((p) => `/writing/${p.slug}`),
     "/about",
     // NOTE: 404.html is generated as PLAIN static HTML by scripts/gen-404.mjs
     // (postbuild). Serving a prerendered React page for unknown paths caused

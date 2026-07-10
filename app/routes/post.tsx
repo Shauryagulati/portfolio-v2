@@ -17,7 +17,7 @@ export function meta({ params }: { params: { slug: string } }) {
 export default function Post() {
   const { slug } = useParams();
   const p = slug ? getPost(slug) : undefined;
-  if (!p) {
+  if (!p || !p.body) {
     return (
       <main className="page subpage">
         <h1 className="page-title">Not found</h1>

@@ -26,17 +26,28 @@ export default function Writing() {
         <ol className="work-list">
           {posts.map((p, i) => (
             <Reveal key={p.slug} order={i + 1} as="li">
-              <Link
-                to={`/writing/${p.slug}`}
-                className="work-row"
-                viewTransition
-              >
-                <span className="mono work-index">{p.date.slice(0, 10)}</span>
-                <span className="work-main">
-                  <span className="work-title">{p.title}</span>
-                  <span className="work-oneliner">{p.summary}</span>
-                </span>
-              </Link>
+              {p.external ? (
+                <a href={p.external} className="work-row" rel="noreferrer">
+                  <span className="mono work-index">{p.date.slice(0, 10)}</span>
+                  <span className="work-main">
+                    <span className="work-title">{p.title}</span>
+                    <span className="work-oneliner">{p.summary}</span>
+                  </span>
+                  <span className="mono work-stack">↗ external</span>
+                </a>
+              ) : (
+                <Link
+                  to={`/writing/${p.slug}`}
+                  className="work-row"
+                  viewTransition
+                >
+                  <span className="mono work-index">{p.date.slice(0, 10)}</span>
+                  <span className="work-main">
+                    <span className="work-title">{p.title}</span>
+                    <span className="work-oneliner">{p.summary}</span>
+                  </span>
+                </Link>
+              )}
             </Reveal>
           ))}
         </ol>

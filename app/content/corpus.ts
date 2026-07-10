@@ -2,6 +2,7 @@ import { site } from "./site";
 import { projects } from "./projects";
 import { about } from "./about";
 import { resume } from "./resume";
+import { posts } from "./writing";
 
 /** One document = one virtual file = one agent-retrievable chunk.
  *  Paths are the terminal's file system; text is what `cat` prints
@@ -117,6 +118,14 @@ export const corpus: Doc[] = [
       `PDF: ${site.url}${resume.pdfPath}`,
     ].join("\n"),
   },
+  // essays published on this site are files too — cat-able and citable
+  ...posts
+    .filter((p) => p.body)
+    .map((p) => ({
+      path: `~/writing/${p.slug}.md`,
+      title: p.title,
+      text: [`# ${p.title}`, p.date, ``, ...(p.body ?? [])].join("\n"),
+    })),
   {
     path: "~/contact.md",
     title: "Contact",

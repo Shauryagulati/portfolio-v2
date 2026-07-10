@@ -3,7 +3,11 @@ export interface Post {
   title: string;
   date: string; // ISO
   summary: string;
-  body: string[]; // paragraphs
+  /** Paragraphs — for essays published on this site. */
+  body?: string[];
+  /** Set instead of body to link a piece published elsewhere
+   *  (Substack, Hashnode, ...). Renders as an outbound link. */
+  external?: string;
 }
 
 /** Essays. The nav link and routes appear automatically when posts
