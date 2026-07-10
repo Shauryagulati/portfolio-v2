@@ -1,0 +1,11 @@
+{
+  // Cloudflare Pages config for direct-upload deploys (npx wrangler pages deploy).
+  // Exists because CF's git-integration builder flaked; this path is deterministic.
+  // The AI binding here is the agent's brain — Workers AI, free tier.
+  "name": "portfolio-v2",
+  "pages_build_output_dir": "./build/client",
+  "compatibility_date": "2026-07-01",
+  "ai": {
+    "binding": "AI"
+  }
+}

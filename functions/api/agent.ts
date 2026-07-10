@@ -19,7 +19,9 @@ interface Env {
   };
 }
 
-const MODEL = "@cf/meta/llama-3.1-8b-instruct";
+// llama-3.1-8b was deprecated 2026-05-30; 3.3-70b-fast is the current
+// best quality/speed on the free allocation
+const MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 
 // Per-isolate rate limit — resets when the isolate recycles. Good enough
 // for a portfolio; a KV-backed limiter is overkill at this traffic.
@@ -48,6 +50,7 @@ export const onRequestPost = async (context: {
   env: Env;
 }) => {
   const { request, env } = context;
+  if (!env.AI) return json({ error: "ai binding missing" }, 503);
   const ip = request.headers.get("cf-connecting-ip") ?? "unknown";
   if (limited(ip)) return json({ error: "rate limited" }, 429);
 
@@ -87,8 +90,9 @@ export const onRequestPost = async (context: {
     const answer = out.response?.trim();
     if (!answer) return json({ error: "empty model response" }, 502);
     return json({ answer, source: hitsDocs[0]?.doc.path ?? null });
-  } catch {
-    // model/binding unavailable — client falls back locally
-    return json({ error: "model unavailable" }, 503);
+  } catch (e) {
+    // client falls back locally; surface a short reason for diagnostics
+    const reason = e instanceof Error ? e.message.slice(0, 140) : "unknown";
+    return json({ error: `model error: ${reason}` }, 503);
   }
 };
