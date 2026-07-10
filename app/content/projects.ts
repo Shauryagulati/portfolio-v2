@@ -12,6 +12,8 @@ export interface Project {
   featured: boolean;
   /** Pre-CMU / superseded work. Listed under "Earlier" on the index. */
   earlier?: boolean;
+  /** Optional proof artifact shown on the case-study page. */
+  figure?: { src: string; alt: string; caption: string };
 }
 
 export const projects: Project[] = [
@@ -51,6 +53,11 @@ export const projects: Project[] = [
       "An MIT-licensed framework that turns 'our agent seems fine' into a test suite with verdicts. CI-friendly, language-agnostic, and opinionated about what matters. It's the distilled lesson of every RAG system I've built: retrieve before you generate, cite what you retrieved, and test the behavior, not the vibes.",
     github: "https://github.com/Shauryagulati/ragverdict",
     featured: true,
+    figure: {
+      src: "/images/ragverdict-demo.gif",
+      alt: "ragverdict running its demo suite: five behavioral tests, all PASS",
+      caption: "the bundled demo running: tool coverage, retrieval quality, hallucination guardrails, citation audit, edge cases",
+    },
   },
   {
     slug: "regulatory-rag",
@@ -93,6 +100,11 @@ export const projects: Project[] = [
     outcome:
       "A fully static site with one serverless function, streaming cited answers, and no failure mode a visitor can see, at $0/month. Every architectural decision is inspectable; the site you are reading is the system diagram. It encodes my working rules for agent products: retrieve before you generate, cite what you retrieved, and design the degraded path before the happy one.",
     featured: true,
+    figure: {
+      src: "/images/this-site-terminal.png",
+      alt: "The site's terminal with the shaurya agent answering a question and citing its source file",
+      caption: "the agent answering with a citation. press / and try it on this very page",
+    },
   },
   {
     slug: "eyeline",

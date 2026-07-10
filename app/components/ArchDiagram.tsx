@@ -76,8 +76,8 @@ const DIAGRAMS: Record<string, Diagram> = {
       { id: "adapter", x: 168, y: 40, w: 110, label: "adapter", sub: "python / http" },
       { id: "probes", x: 318, y: 40, w: 150, label: "behavioral probes", sub: "tools · citations · refusals" },
       { id: "judge", x: 318, y: 140, w: 150, label: "LLM-as-judge", sub: "optional, degrades" },
-      { id: "verdict", x: 508, y: 40, w: 130, label: "PASS / FAIL / WEAK", accent: true },
-      { id: "ci", x: 678, y: 40, w: 80, label: "CI" },
+      { id: "verdict", x: 508, y: 40, w: 158, label: "PASS / FAIL / WEAK", accent: true },
+      { id: "ci", x: 706, y: 40, w: 70, label: "CI" },
     ],
     edges: [
       { from: "agent", to: "adapter" },

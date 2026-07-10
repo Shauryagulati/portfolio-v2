@@ -371,6 +371,16 @@ li:last-child .work-row {
   margin-top: var(--space-2);
 }
 
+.case-figure {
+  margin: 0 0 var(--space-4);
+}
+
+.case-figure img {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
 .case-footer {
   display: flex;
   justify-content: space-between;

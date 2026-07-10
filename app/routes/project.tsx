@@ -51,6 +51,16 @@ export default function Project() {
       <Reveal order={4}>
         <ArchDiagram slug={p.slug} />
       </Reveal>
+      {p.figure && (
+        <Reveal order={4}>
+          <figure className="case-figure">
+            <img src={p.figure.src} alt={p.figure.alt} loading="lazy" />
+            <figcaption className="mono diagram-caption">
+              {p.figure.caption}
+            </figcaption>
+          </figure>
+        </Reveal>
+      )}
 
       {SECTIONS.map((s, n) => (
         <Reveal key={s} order={n + 5} as="section">
