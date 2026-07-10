@@ -1,22 +1,37 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { site } from "~/content/site";
 import { projects } from "~/content/projects";
 import { Reveal } from "~/components/Reveal";
 import { TerminalArtifact } from "~/components/TerminalArtifact";
+import { CRT_FRAME } from "~/components/crt-frame";
 import { pageMeta } from "~/lib/seo";
 
 const AsciiCrt = lazy(() => import("~/components/AsciiCrt"));
 
-/** Canvas only after hydration — keeps prerendered HTML clean. */
+/** ONE permanent <pre>: prerendered with a frozen frame (instant LCP,
+ *  zero shift), then the live engine mounts at browser idle and streams
+ *  frames into the same node. The element never remounts, so the
+ *  browser never re-records a later LCP. */
 function HeroObject() {
-  const [ready, setReady] = useState(false);
-  useEffect(() => setReady(true), []);
+  const [live, setLive] = useState(false);
+  const preRef = useRef<HTMLPreElement>(null);
+  useEffect(() => {
+    const start = () =>
+      "requestIdleCallback" in window
+        ? requestIdleCallback(() => setLive(true), { timeout: 2500 })
+        : setTimeout(() => setLive(true), 1200);
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+  }, []);
   return (
     <div className="hero-object" aria-hidden="true">
-      {ready && (
+      <pre className="ascii-static" ref={preRef}>
+        {CRT_FRAME}
+      </pre>
+      {live && (
         <Suspense fallback={null}>
-          <AsciiCrt />
+          <AsciiCrt target={preRef} />
         </Suspense>
       )}
     </div>

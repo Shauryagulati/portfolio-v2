@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei";
 import type { Group } from "three";
-import { AsciiOut } from "./AsciiOut";
+import { AsciiText } from "./AsciiText";
 
 /** The heritage object: a retro CRT terminal, built from primitives and
  *  rendered as live text. Ink characters by day, phosphor by night —
@@ -88,7 +88,11 @@ function CrtModel({
   );
 }
 
-export default function AsciiCrt() {
+export default function AsciiCrt({
+  target,
+}: {
+  target: React.RefObject<HTMLPreElement | null>;
+}) {
   const [thinking, setThinking] = useState(false);
   const [excited, setExcited] = useState(false);
   const [coarse, setCoarse] = useState(false);
@@ -112,7 +116,8 @@ export default function AsciiCrt() {
   }, []);
 
   return (
-    <div className="ascii-stage" aria-hidden="true">
+    // the engine room: renders invisibly, streams frames into the pre
+    <div className="ascii-engine" aria-hidden="true">
       <Canvas
         camera={{ position: [0, 0.25, 7.4], fov: 36 }}
         gl={{ antialias: false, powerPreference: "low-power" }}
@@ -122,10 +127,7 @@ export default function AsciiCrt() {
         <directionalLight position={[3, 4, 5]} intensity={1.8} />
         <directionalLight position={[-4, -2, 2]} intensity={0.5} />
         <CrtModel thinking={thinking} excited={excited} />
-        <AsciiOut
-          characters=" .:-·=+*shrya#%@"
-          resolution={coarse ? 0.24 : 0.21}
-        />
+        <AsciiText target={target} resolution={coarse ? 0.24 : 0.21} />
       </Canvas>
     </div>
   );
