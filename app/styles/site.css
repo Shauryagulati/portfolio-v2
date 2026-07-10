@@ -248,6 +248,8 @@ li:last-child .work-row {
 }
 
 .work-index {
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
   color: var(--ink-3);
 }
 
@@ -561,8 +563,8 @@ li:last-child .work-row {
 }
 
 .term-window-title {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
   color: var(--term-dim);
   flex: 1;
   text-align: center;
@@ -614,15 +616,20 @@ li:last-child .work-row {
   color: var(--term-dim);
 }
 
-/* terminal-native markdown: # bold bright, ## phosphor */
+/* terminal-native markdown: # bold bright, ## phosphor — in the
+   machine's pixel voice */
 .term-line.term-h1 {
+  font-family: var(--font-pixel);
+  font-size: 1.05rem;
   color: var(--term-ink);
-  font-weight: 700;
+  margin-block: 0.2em;
 }
 
 .term-line.term-h2 {
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
   color: var(--term-accent);
-  margin-top: 0.35em;
+  margin-top: 0.5em;
 }
 
 .term-input-row {

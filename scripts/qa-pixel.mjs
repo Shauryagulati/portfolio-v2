@@ -1,0 +1,11 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.addInitScript(() => localStorage.setItem("theme", "dark"));
+await p.goto("http://localhost:5199/", { waitUntil: "networkidle" });
+await p.keyboard.press("/");
+await p.waitForSelector(".term-window");
+await p.fill(".term-input", "cat resume.md"); await p.keyboard.press("Enter");
+await p.waitForTimeout(1000);
+await p.screenshot({ path: process.env.S + "/pixel-dark.png" });
+await b.close();

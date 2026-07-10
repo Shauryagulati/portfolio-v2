@@ -6,10 +6,20 @@
    One accent. No gradients, no glow, no glass.
    ———————————————————————————————————————————————— */
 
+/* Geist Pixel (OFL) — the machine's display voice. Accent-only:
+   terminal chrome, doc headers, index numbers. Never body text. */
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("/fonts/GeistPixel-Square.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   /* fonts */
   --font-serif: "Newsreader Variable", "Iowan Old Style", Georgia, serif;
   --font-mono: "Commit Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-pixel: "Geist Pixel", "Commit Mono", ui-monospace, monospace;
 
   /* type scale (fluid) */
   --text-xs: 0.72rem;
