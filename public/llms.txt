@@ -2,7 +2,7 @@
 
 > AI engineer working on agents, retrieval, and evaluation. Carnegie Mellon MISM-BIDA graduate ('25), most recently Founding AI Engineer at Lunon, where I built the multi-agent pipeline and analyst copilot behind automated commercial due diligence. I care about systems that cite their sources, tests that catch agents misbehaving, and products that earn their place in a workflow.
 
-Canonical site: https://shauryagulati.me
+Canonical site: https://shauryagulati.dev
 Contact: i.shauryagulati@gmail.com · GitHub: https://github.com/Shauryagulati · LinkedIn: https://www.linkedin.com/in/shauryagulati/
 
 ---
@@ -198,7 +198,7 @@ Undergraduate researcher in sentiment analysis and computer vision; published at
 - Backend: Python, FastAPI, PostgreSQL, Redis, SQLAlchemy, Alembic, asyncio, SSE streaming, SQL / MySQL
 - Observability / Infra: Langfuse, OpenTelemetry, Docker, GitHub Actions, Git
 
-PDF: https://shauryagulati.me/resume.pdf
+PDF: https://shauryagulati.dev/resume.pdf
 ---
 
 # Never Let Synthesis Outrun Retrieval

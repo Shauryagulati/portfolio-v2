@@ -10,7 +10,7 @@ const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http:/
   <rect x="90" y="440" width="560" height="110" rx="12" fill="#0D0D0B"/>
   <text x="122" y="485" font-family="Menlo, monospace" font-size="20" fill="#77736B">guest@shaurya ~ %<tspan fill="#E8E6E1">&#160;shaurya</tspan></text>
   <text x="122" y="522" font-family="Menlo, monospace" font-size="20" fill="#34D76F">▸ agent online. ask me anything.</text>
-  <text x="1104" y="580" font-family="Menlo, monospace" font-size="18" fill="#8B867C" text-anchor="end">shauryagulati.me</text>
+  <text x="1104" y="580" font-family="Menlo, monospace" font-size="18" fill="#8B867C" text-anchor="end">shauryagulati.dev</text>
 </svg>`;
 
 const png = await sharp(Buffer.from(svg)).png().toBuffer();

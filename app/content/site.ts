@@ -11,7 +11,7 @@ export const site = {
   intro:
     "AI engineer working on agents, retrieval, and evaluation. Carnegie Mellon MISM-BIDA graduate ('25), most recently Founding AI Engineer at Lunon, where I built the multi-agent pipeline and analyst copilot behind automated commercial due diligence. I care about systems that cite their sources, tests that catch agents misbehaving, and products that earn their place in a workflow.",
   /** Set to the real domain once purchased; used by SEO generation. */
-  url: "https://shauryagulati.me",
+  url: "https://shauryagulati.dev",
   email: "i.shauryagulati@gmail.com",
   github: "https://github.com/Shauryagulati",
   linkedin: "https://www.linkedin.com/in/shauryagulati/",
