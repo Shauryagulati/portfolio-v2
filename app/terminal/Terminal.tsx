@@ -72,6 +72,16 @@ export function Terminal() {
       shell.boot();
       window.dispatchEvent(new CustomEvent("terminal:visible"));
       requestAnimationFrame(() => inputRef.current?.focus());
+      // first visit: the terminal demos itself (Avi-style) — one `help`,
+      // typed for you, never again
+      try {
+        if (!localStorage.getItem("term-demoed")) {
+          localStorage.setItem("term-demoed", "1");
+          setTimeout(() => shell.exec("help"), 900);
+        }
+      } catch {
+        /* private mode */
+      }
     } else {
       window.dispatchEvent(new CustomEvent("terminal:hidden"));
     }
@@ -133,6 +143,23 @@ export function Terminal() {
                 {l.text || " "}
               </div>
             ))}
+            {shell.mode === "shell" && (
+              <div className="term-chips" aria-label="Try a command">
+                {["help", "projects", "stats", site.handle].map((c) => (
+                  <button
+                    key={c}
+                    className="term-chip mono"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      shell.exec(c === "projects" ? "ls projects" : c);
+                      inputRef.current?.focus();
+                    }}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="term-input-row">
               <span className={shell.mode === "agent" ? "term-green" : "term-dim"}>
                 {shell.prompt}

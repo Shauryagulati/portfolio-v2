@@ -62,6 +62,16 @@ export default function Home() {
             <p className="hero-thesis prose">{site.thesis}</p>
           </Reveal>
           <Reveal order={3}>
+            <ul className="proofs mono">
+              {site.proofs.map((p) => (
+                <li key={p.v}>
+                  <span className="proof-v">{p.v}</span>
+                  <span className="proof-l">{p.l}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+          <Reveal order={4}>
             <TerminalArtifact />
           </Reveal>
         </div>

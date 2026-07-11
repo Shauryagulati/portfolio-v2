@@ -39,7 +39,7 @@ export function Nav() {
           aria-label="Open terminal"
           title="Open terminal (/)"
         >
-          [/]
+          Terminal<span className="nav-term-key"> /</span>
         </button>
         <ThemeToggle />
       </nav>

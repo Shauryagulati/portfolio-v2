@@ -678,6 +678,69 @@ li:last-child .work-row {
   align-items: baseline;
 }
 
+/* clickable command chips — the terminal invites you in */
+.term-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-block: 0.5rem 0.7rem;
+}
+
+.term-chip {
+  font-size: 0.72rem;
+  color: var(--term-dim);
+  border: 1px solid var(--term-line);
+  border-radius: 5px;
+  padding: 0.15rem 0.55rem;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.term-chip:hover {
+  color: var(--term-accent);
+  border-color: var(--term-accent);
+}
+
+/* hero proof bar — the numbers above the fold */
+.proofs {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2) var(--space-3);
+  max-width: 30rem;
+}
+
+.proofs li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-2);
+}
+
+.proof-v {
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.proof-l {
+  color: var(--ink-3);
+  text-transform: none;
+  letter-spacing: 0.03em;
+  font-size: 0.7rem;
+}
+
+.nav-term-key {
+  color: var(--accent);
+}
+
 .term-input {
   flex: 1;
   background: none;

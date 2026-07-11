@@ -1,0 +1,24 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto("http://localhost:5200/", { waitUntil: "networkidle" });
+await p.keyboard.press("/");
+await p.waitForSelector(".term-window");
+await p.waitForTimeout(1800); // auto-demo should fire
+const t = await p.innerText(".term-scroll");
+console.log(/help\s+list commands|list commands/.test(t) ? "PASS auto-demo ran help" : "FAIL auto-demo");
+const chips = await p.locator(".term-chip").count();
+console.log(chips >= 4 ? `PASS chips (${chips})` : `FAIL chips (${chips})`);
+await p.locator(".term-chip", { hasText: "stats" }).click();
+await p.waitForTimeout(300);
+const t2 = await p.innerText(".term-scroll");
+console.log(/94%/.test(t2) && /cited accuracy/.test(t2) ? "PASS stats command" : "FAIL stats");
+await p.screenshot({ path: process.env.S + "/ux-term.png" });
+await p.keyboard.press("Escape");
+await p.waitForTimeout(500);
+const proofs = await p.locator(".proofs li").count();
+console.log(proofs === 4 ? "PASS hero proof bar" : `FAIL proofs (${proofs})`);
+const nav = await p.locator(".nav-term").innerText();
+console.log(/terminal/i.test(nav) ? "PASS nav says Terminal" : "FAIL nav");
+await p.screenshot({ path: process.env.S + "/ux-home.png" });
+await b.close();
