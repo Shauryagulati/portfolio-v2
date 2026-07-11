@@ -20,11 +20,4 @@ export const site = {
     { label: "About", to: "/about" },
   ],
   terminalHint: "type shaurya to talk to my agent",
-  /** Verified numbers only — the hero proof bar and the `stats` command. */
-  proofs: [
-    { v: "94%", l: "cited accuracy, regulatory RAG @ CMU" },
-    { v: "1,000+", l: "legal docs in hybrid retrieval" },
-    { v: "~20", l: "tools in a production analyst copilot" },
-    { v: "$0/mo", l: "to run this site and its agent" },
-  ],
 } as const;

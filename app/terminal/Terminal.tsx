@@ -72,16 +72,6 @@ export function Terminal() {
       shell.boot();
       window.dispatchEvent(new CustomEvent("terminal:visible"));
       requestAnimationFrame(() => inputRef.current?.focus());
-      // first visit: the terminal demos itself (Avi-style) — one `help`,
-      // typed for you, never again
-      try {
-        if (!localStorage.getItem("term-demoed")) {
-          localStorage.setItem("term-demoed", "1");
-          setTimeout(() => shell.exec("help"), 900);
-        }
-      } catch {
-        /* private mode */
-      }
     } else {
       window.dispatchEvent(new CustomEvent("terminal:hidden"));
     }
@@ -122,8 +112,16 @@ export function Terminal() {
             }}
             style={{ touchAction: "none" }}
           >
-            <span className="term-artifact-bar" aria-hidden="true">
-              <i /> <i /> <i />
+            <span className="term-artifact-bar term-lights">
+              <button
+                className="term-light term-light-close"
+                onClick={close}
+                onPointerDown={(e) => e.stopPropagation()}
+                aria-label="Close terminal"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+              <i /> <i />
             </span>
             <span className="term-window-title">
               guest@{site.handle} — {shell.mode === "agent" ? "agent" : "zsh"}
@@ -145,7 +143,7 @@ export function Terminal() {
             ))}
             {shell.mode === "shell" && (
               <div className="term-chips" aria-label="Try a command">
-                {["help", "projects", "stats", site.handle].map((c) => (
+                {["help", "projects", site.handle].map((c) => (
                   <button
                     key={c}
                     className="term-chip mono"

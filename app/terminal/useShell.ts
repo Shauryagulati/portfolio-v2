@@ -70,7 +70,7 @@ export function useShell(close: () => void) {
         toggleTheme,
         history: history.current,
       };
-      if (name === site.handle) {
+      if (name === site.handle || name === "agent") {
         // agent boot — Task 7 replaces this stub via agentHandler
         if (agentHandler.current) {
           setMode("agent");

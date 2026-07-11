@@ -678,6 +678,39 @@ li:last-child .work-row {
   align-items: baseline;
 }
 
+/* the red light closes — like a real window */
+.term-lights {
+  align-items: center;
+}
+
+.term-light {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--term-dim);
+  opacity: 0.8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.term-light-close span {
+  font-size: 9px;
+  color: transparent;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.term-light-close:hover {
+  border-color: #e0885e;
+  background: #e0885e;
+}
+
+.term-light-close:hover span {
+  color: #0d0d0b;
+}
+
 /* clickable command chips — the terminal invites you in */
 .term-chips {
   display: flex;
@@ -702,39 +735,6 @@ li:last-child .work-row {
 .term-chip:hover {
   color: var(--term-accent);
   border-color: var(--term-accent);
-}
-
-/* hero proof bar — the numbers above the fold */
-.proofs {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-4);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2) var(--space-3);
-  max-width: 30rem;
-}
-
-.proofs li {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5em;
-  border-top: 1px solid var(--line);
-  padding-top: var(--space-2);
-}
-
-.proof-v {
-  font-family: var(--font-pixel);
-  font-size: 1rem;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-.proof-l {
-  color: var(--ink-3);
-  text-transform: none;
-  letter-spacing: 0.03em;
-  font-size: 0.7rem;
 }
 
 .nav-term-key {

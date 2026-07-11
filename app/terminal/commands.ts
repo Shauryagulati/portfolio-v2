@@ -48,7 +48,7 @@ export const commands: Record<string, Command> = {
         ...Object.entries(commands).map(
           ([name, c]) => `  ${name.padEnd(10)} ${c.help}`,
         ),
-        `  ${site.handle.padEnd(10)} talk to my agent (RAG over everything here)`,
+        `  ${site.handle.padEnd(10)} talk to my agent (RAG over everything here) — or: agent`,
       );
     },
   },
@@ -163,18 +163,6 @@ export const commands: Record<string, Command> = {
         ...ctx.history.map((h, i) => `  ${String(i + 1).padStart(3)}  ${h}`),
       ),
   },
-  stats: {
-    help: "the numbers, verified",
-    run: (ctx) => {
-      for (const p of site.proofs) {
-        ctx.print("h1", p.v);
-        ctx.print("dim", "  " + p.l);
-      }
-      ctx.print("out", "");
-      ctx.print("h1", String(projects.filter((p) => !p.earlier).length));
-      ctx.print("dim", "  current projects on this site (cat ~/projects)");
-    },
-  },
   neofetch: {
     help: "about this machine",
     run: (ctx) => {
@@ -215,4 +203,4 @@ export const commands: Record<string, Command> = {
   },
 };
 
-export const commandNames = [...Object.keys(commands), site.handle];
+export const commandNames = [...Object.keys(commands), site.handle, "agent"];
