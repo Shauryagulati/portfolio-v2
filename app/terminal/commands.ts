@@ -48,7 +48,7 @@ export const commands: Record<string, Command> = {
         ...Object.entries(commands).map(
           ([name, c]) => `  ${name.padEnd(10)} ${c.help}`,
         ),
-        `  ${site.handle.padEnd(10)} talk to my agent (RAG over everything here) — or: agent`,
+        `  ${site.handle.padEnd(10)} talk to my agent (RAG over everything here), or: agent`,
       );
     },
   },

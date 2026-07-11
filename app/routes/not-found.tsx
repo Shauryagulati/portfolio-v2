@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { site } from "~/content/site";
 
 export function meta() {
-  return [{ title: `404 — ${site.name}` }];
+  return [{ title: `404 · ${site.name}` }];
 }
 
 export default function NotFound() {

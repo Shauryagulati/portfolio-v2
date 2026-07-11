@@ -6,7 +6,7 @@ import { pageMeta } from "~/lib/seo";
 
 export function meta() {
   return pageMeta({
-    title: `Projects — ${site.name}`,
+    title: `Projects · ${site.name}`,
     description: `Selected work by ${site.name}: ${projects
       .map((p) => p.title)
       .join(", ")}.`,

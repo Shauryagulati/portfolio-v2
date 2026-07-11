@@ -6,7 +6,7 @@ import { pageMeta } from "~/lib/seo";
 
 export function meta() {
   return pageMeta({
-    title: `About — ${site.name}`,
+    title: `About · ${site.name}`,
     description: about.body[0],
     path: "/about",
   });

@@ -21,7 +21,7 @@ export function TerminalArtifact() {
         </span>
       </span>
       <span className="term-artifact-hint mono">
-        press <b>/</b> or click to activate — {site.terminalHint}
+        press <b>/</b> or click to activate · {site.terminalHint}
       </span>
     </button>
   );

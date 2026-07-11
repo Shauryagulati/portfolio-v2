@@ -7,9 +7,9 @@ import { pageMeta } from "~/lib/seo";
 
 export function meta({ params }: { params: { slug: string } }) {
   const p = getProject(params.slug);
-  if (!p) return [{ title: `Not found — ${site.name}` }];
+  if (!p) return [{ title: `Not found · ${site.name}` }];
   return pageMeta({
-    title: `${p.title} — ${site.name}`,
+    title: `${p.title} · ${site.name}`,
     description: p.oneliner,
     path: `/projects/${p.slug}`,
   });

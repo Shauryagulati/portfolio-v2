@@ -71,13 +71,13 @@ export function localAnswer(query: string): AgentAnswer {
   // hijacked questions like "tell me about eu navigator"
   if (/^(who is|who'?s)\b/.test(q) || /^about\b/.test(q.trim())) {
     return {
-      text: `${site.name} — ${site.role} at ${site.school}. ${site.thesis}`,
+      text: `${site.name}, ${site.role} at ${site.school}. ${site.thesis}`,
       source: "~/about.md",
     };
   }
-  if (/(project|work|built|portfolio)s?\b/.test(q) && q.length < 32) {
+  if (/(project|built|portfolio)s?\b/.test(q) && q.length < 32) {
     return {
-      text: `three case studies live here: eu-navigator (multi-agent RAG over EU law), air-quality-mlops (full MLOps lifecycle), bert-qa (fine-tuned QA on Azure). Ask about any of them, or run: ls ~/projects`,
+      text: `recent case studies here: suture (AI ops for a cardiology practice), rag-verdict (pytest for RAG agents), regulatory-rag (94% cited accuracy at CMU), this-site, and eyeline. Ask about any of them, or run: ls ~/projects`,
       source: "~/projects",
     };
   }

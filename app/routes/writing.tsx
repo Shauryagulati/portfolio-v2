@@ -6,7 +6,7 @@ import { pageMeta } from "~/lib/seo";
 
 export function meta() {
   return pageMeta({
-    title: `Writing — ${site.name}`,
+    title: `Writing · ${site.name}`,
     description: `Essays by ${site.name} on AI products, agents, and systems.`,
     path: "/writing",
   });
@@ -20,7 +20,7 @@ export default function Writing() {
       </Reveal>
       {posts.length === 0 ? (
         <Reveal order={1}>
-          <p className="prose">Nothing published yet — drafts in progress.</p>
+          <p className="prose">Nothing published yet. Drafts in progress.</p>
         </Reveal>
       ) : (
         <ol className="work-list">

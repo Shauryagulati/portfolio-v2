@@ -76,13 +76,13 @@ export function useShell(close: () => void) {
           setMode("agent");
           agentHandler.current("__boot__");
         } else {
-          print("err", "agent offline — coming online in the next commit.");
+          print("err", "agent offline. coming online in the next commit.");
         }
         return;
       }
       const cmd = commands[name];
       if (!cmd) {
-        print("err", `command not found: ${name} — try help`);
+        print("err", `command not found: ${name}. try help`);
         return;
       }
       cmd.run(ctx, args);

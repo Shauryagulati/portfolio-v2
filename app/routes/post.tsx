@@ -6,9 +6,9 @@ import { pageMeta } from "~/lib/seo";
 
 export function meta({ params }: { params: { slug: string } }) {
   const p = getPost(params.slug);
-  if (!p) return [{ title: `Not found — ${site.name}` }];
+  if (!p) return [{ title: `Not found · ${site.name}` }];
   return pageMeta({
-    title: `${p.title} — ${site.name}`,
+    title: `${p.title} · ${site.name}`,
     description: p.summary,
     path: `/writing/${p.slug}`,
   });

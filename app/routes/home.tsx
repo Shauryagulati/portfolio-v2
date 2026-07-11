@@ -40,7 +40,7 @@ function HeroObject() {
 
 export function meta() {
   return pageMeta({
-    title: `${site.name} — ${site.role}`,
+    title: site.name,
     description: site.intro,
     path: "/",
   });

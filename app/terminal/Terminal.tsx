@@ -124,7 +124,7 @@ export function Terminal() {
               <i /> <i />
             </span>
             <span className="term-window-title">
-              guest@{site.handle} — {shell.mode === "agent" ? "agent" : "zsh"}
+              guest@{site.handle} · {shell.mode === "agent" ? "agent" : "zsh"}
             </span>
             <button
               className="term-close mono"

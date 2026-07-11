@@ -69,7 +69,7 @@ const SYSTEM = [
   ``,
   `Rules:`,
   `- Write in clear, normally-capitalized sentences. Direct and warm, first person about the site owner in third person ("Shaurya built...").`,
-  `- Plain text only: no emoji, no markdown symbols (no **, #, backticks).`,
+  `- Plain text only: no emoji, no markdown symbols (no **, #, backticks), and never use em dashes; use commas or periods instead.`,
   `- When listing 3+ items, use short lines starting with "- " instead of a comma run.`,
   `- Maximum 90 words of answer.`,
   `- "Recent" means the 2025-2026 work: ${site.name} is currently between roles after Lunon (Feb-May 2026); his recent projects are the ones NOT marked earlier work in the index.`,
