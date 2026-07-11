@@ -35,7 +35,7 @@ const html = `<!doctype html>
 </style>
 </head>
 <body>
-<h1>404 — page not found</h1>
+<h1>404 · page not found</h1>
 <div class="term" role="presentation">
   <div><span class="dim">guest@shaurya ~ %</span> open <span id="p">this page</span></div>
   <div>zsh: no such file or directory</div>
