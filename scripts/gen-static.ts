@@ -3,6 +3,7 @@
 import { writeFileSync } from "node:fs";
 import { site } from "../app/content/site";
 import { projects } from "../app/content/projects";
+import { posts } from "../app/content/writing";
 import { corpus } from "../app/content/corpus";
 
 // llms.txt — curated context for AI crawlers, straight from the corpus
@@ -28,6 +29,8 @@ const paths = [
   "/",
   "/projects",
   ...projects.map((p) => `/projects/${p.slug}`),
+  "/writing",
+  ...posts.filter((p) => p.body).map((p) => `/writing/${p.slug}`),
   "/about",
 ];
 const today = new Date().toISOString().slice(0, 10);
